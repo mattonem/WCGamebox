@@ -24,9 +24,10 @@ GameboxApp class >> bridgeClientClass [
 { #category : 'description' }
 GameboxApp class >> circleFab [
 
-	| circle ref node circle2 ref2 |
-	circle := GBCircle new.
-	circle2 := GBCircle new.
+	| circle ref node circle2 ref2 img|
+	circle := GBCircle new radius: 100.
+	circle2 := GBCircle new radius: 30.
+	img := GBSVG new url: 'https://www.svgrepo.com/show/404920/camping.svg'; yourself.
 	node := GBNode new.
 	ref := GBDrawingReference new
 		       name: 'Circle';
@@ -35,11 +36,12 @@ GameboxApp class >> circleFab [
 		       yourself.
 	ref2 := GBDrawingReference new
 		        name: 'Circle';
-		        position: 100 @ 100;
-		        angle: 0 degreesToRadians;
+		        position: 200 @ 200;
+		        angle: 10 degreesToRadians;
 		        yourself.
-	ref2 addElement: circle2.
+	ref2 addElement: img.
 	ref addElement: circle.
+	
 	node addElement: ref.
 	node addElement: ref2.
 	^ node
@@ -71,7 +73,11 @@ GameboxApp class >> generateHtmlUsing: html [
 					html div
 						class: 'card-body';
 						with: [
-							self addComponent: (WCGameBoxCanvas on: html) named: #plotter ] ] ]
+							self addComponent: (WCGameBoxCanvas on: html) named: #plotter.
+							html div
+								id: #renderButton;
+								class: 'btn btn-primary';
+								with: 'render' ] ] ]
 ]
 
 { #category : 'description' }
@@ -89,8 +95,8 @@ GameboxApp >> start [
 	super start.
 
 	self initializeComponentHolder.
-
-	(self componentNamed: #plotter)
-		scene: self class circleFab;
-		update
+	(document getElementById: #renderButton)
+		addEventListener: #click
+		block: [ (self componentNamed: #plotter) update ].
+	(self componentNamed: #plotter) scene: self class circleFab
 ]

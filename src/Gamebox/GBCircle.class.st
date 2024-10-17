@@ -24,12 +24,23 @@ GBCircle >> color: anObject [
 { #category : 'accessing' }
 GBCircle >> drawOn: ctx [
 
-	ctx fillStyle: 'red'.
+	ctx beginPath.
 	ctx
-		fillRect: 0
+		arc: 0
 		and: 0
-		and: 80
-		and: 80
+		radius: radius
+		and: 0
+		and: 2 * Float pi.
+	ctx fillStyle: color.
+
+	ctx fill
+]
+
+{ #category : 'accessing' }
+GBCircle >> initialize [
+
+	super initialize.
+	color := 'red'
 ]
 
 { #category : 'accessing' }

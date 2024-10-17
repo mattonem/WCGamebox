@@ -11,6 +11,7 @@ Class {
 { #category : 'adding' }
 GBNode >> addElement: anObject [ 
 	children add: anObject.
+	anObject addedTo: self.
 	announcer announce: (ChildAdded new child: anObject)
 ]
 
@@ -19,9 +20,18 @@ GBNode >> children [
 	^ children 
 ]
 
-{ #category : 'initialization' }
+{ #category : 'adding' }
+GBNode >> forwardEvent [ 
+	^ GBAnnouncement 
+]
+
+{ #category : 'adding' }
 GBNode >> initialize [
 
 	super initialize.
-	children := OrderedCollection new
+	children := OrderedCollection new.
+	announcer
+		when: self forwardEvent
+		do: [ :evt | children do: [ :c | c announcer announce: evt ] ]
+		for: self
 ]

@@ -10,6 +10,16 @@ Class {
 }
 
 { #category : 'accessing' }
+GBDrawingReference >> addedTo: aNode [
+
+	super addedTo: aNode.
+	announcer
+		when: GBDrawingNow
+		do: [ :evt | self drawChildren: evt context evt: evt ]
+		for: self
+]
+
+{ #category : 'accessing' }
 GBDrawingReference >> angle [
 
 	^ angle
@@ -19,6 +29,22 @@ GBDrawingReference >> angle [
 GBDrawingReference >> angle: anObject [
 
 	angle := anObject
+]
+
+{ #category : 'accessing' }
+GBDrawingReference >> drawChildren: anObject evt: evt [
+
+	anObject translate: position x and: position y.
+	anObject rotate: angle.
+	children do: [ :child | child announcer announce: evt ].
+	anObject rotate: 0 - angle.
+	anObject translate: 0 - position x and: 0 - position y
+]
+
+{ #category : 'accessing' }
+GBDrawingReference >> forwardEvent [
+
+	^ super forwardEvent - GBDrawingNow
 ]
 
 { #category : 'accessing' }

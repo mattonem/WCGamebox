@@ -84,3 +84,11 @@ WCGameBoxCanvas >> start [
 
 	super start.
 ]
+
+{ #category : 'accessing' }
+WCGameBoxCanvas >> update [
+
+	scene announcer announce: (GBDrawingNow new
+			 context: self context;
+			 yourself)
+]

@@ -22,8 +22,14 @@ GBCircle >> color: anObject [
 ]
 
 { #category : 'accessing' }
-GBCircle >> drawOn: aCanvas [
-	self shouldBeImplemented 
+GBCircle >> drawOn: ctx [
+
+	ctx fillStyle: 'red'.
+	ctx
+		fillRect: 0
+		and: 0
+		and: 80
+		and: 80
 ]
 
 { #category : 'accessing' }

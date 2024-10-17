@@ -24,13 +24,25 @@ GameboxApp class >> bridgeClientClass [
 { #category : 'description' }
 GameboxApp class >> circleFab [
 
-	| circle ref |
-	circle := Object new.
+	| circle ref node circle2 ref2 |
+	circle := GBCircle new.
+	circle2 := GBCircle new.
+	node := GBNode new.
 	ref := GBDrawingReference new
 		       name: 'Circle';
+		       position: 100 @ 100;
+		       angle: 180 degreesToRadians;
 		       yourself.
+	ref2 := GBDrawingReference new
+		        name: 'Circle';
+		        position: 100 @ 100;
+		        angle: 0 degreesToRadians;
+		        yourself.
+	ref2 addElement: circle2.
 	ref addElement: circle.
-	^ ref
+	node addElement: ref.
+	node addElement: ref2.
+	^ node
 ]
 
 { #category : 'description' }
@@ -59,11 +71,7 @@ GameboxApp class >> generateHtmlUsing: html [
 					html div
 						class: 'card-body';
 						with: [
-							self
-								addComponent: ((WCGameBoxCanvas on: html)
-										 scene: self circleFab;
-										 yourself)
-								named: #plotter ] ] ]
+							self addComponent: (WCGameBoxCanvas on: html) named: #plotter ] ] ]
 ]
 
 { #category : 'description' }
@@ -82,5 +90,7 @@ GameboxApp >> start [
 
 	self initializeComponentHolder.
 
-	self componentNamed: #plotter
+	(self componentNamed: #plotter)
+		scene: self class circleFab;
+		update
 ]

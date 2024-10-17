@@ -10,6 +10,10 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+GBElement >> addedTo: anElement [
+]
+
+{ #category : 'as yet unclassified' }
 GBElement >> announcer [
 
 	^ announcer 

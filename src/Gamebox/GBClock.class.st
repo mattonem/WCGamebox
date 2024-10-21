@@ -5,7 +5,9 @@ Class {
 		'parent',
 		'started',
 		'lastUpdate',
-		'requestedPeriodMs'
+		'requestedPeriodMs',
+		'lastPeriod',
+		'timeFactor'
 	],
 	#pools : [
 		'PjDomGlobals'
@@ -24,8 +26,16 @@ GBClock >> initialize [
 
 	started := false.
 	lastUpdate := 0.
+	lastPeriod := 1.
 	self requestedTps: 60.
+	timeFactor := 1.
 	
+]
+
+{ #category : 'as yet unclassified' }
+GBClock >> lastPeriod [
+
+	^ lastPeriod
 ]
 
 { #category : 'as yet unclassified' }
@@ -33,6 +43,7 @@ GBClock >> loop [
 
 	| dt loopStartTime nextUpdateDue |
 	loopStartTime := self timeNow.
+	lastPeriod := loopStartTime - lastUpdate + 1.
 	started ifFalse: [ ^ self ].
 	self tick.
 	nextUpdateDue := loopStartTime + requestedPeriodMs.
@@ -65,12 +76,23 @@ GBClock >> tick [
 	| dt |
 	dt := self timeNow - lastUpdate.
 	parent announcer announce: (GBTick new
-			 duration: dt/requestedPeriodMs;
+			 duration: timeFactor * dt / requestedPeriodMs;
 			 yourself)
+]
+
+{ #category : 'as yet unclassified' }
+GBClock >> timeFactor: anInteger [
+	timeFactor := anInteger 
 ]
 
 { #category : 'as yet unclassified' }
 GBClock >> timeNow [
 
- ^ (window performance now) asInteger
+ ^ (window performance now) 
+]
+
+{ #category : 'as yet unclassified' }
+GBClock >> tps [
+
+	^ 1000 / lastPeriod
 ]

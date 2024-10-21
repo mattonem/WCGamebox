@@ -55,6 +55,28 @@ GameboxApp class >> generateHtmlUsing: html [
 						with: [
 							html div with: [
 									self addComponent: (WCGameBoxCanvas on: html) named: #plotter ].
+							html div with: [
+									html label
+										for: 'tps';
+										class: 'form-label';
+										with: 'TPS: '.
+									html inputRange
+										min: 1;
+										max: 120;
+										value: 60;
+										class: 'form-range';
+										id: 'tps' ].
+							html div with: [
+								html label
+									for: 'timeFactor';
+									class: 'form-label';
+									with: 'TimeSpeed: '.
+								html inputRange
+									min: 1;
+									max: 200;
+									value: 100;
+									class: 'form-range';
+									id: 'timeFactor' ].
 							html div
 								id: #start;
 								class: 'btn btn-primary';
@@ -90,7 +112,7 @@ GameboxApp >> sceneFactory [
 		                yourself.
 
 	clock := GBClock new.
-	clock requestedTps: 120.
+	clock requestedTps: 60.
 	img := GBImage new
 		       url: 'https://www.svgrepo.com/show/219787/camping-tent.svg';
 		       yourself.
@@ -103,7 +125,7 @@ GameboxApp >> sceneFactory [
 		       name: 'Image';
 		       position: 500 @ 500;
 		       yourself.
-		
+
 	ref addElement: ref2.
 	ref2 addElement: img.
 	ref addElement: animation.
@@ -111,7 +133,8 @@ GameboxApp >> sceneFactory [
 	node addElement: clock.
 	node addElement: orchestrator.
 	node addElement: GBDrawSequencer new.
-
+	node addElement: GBDebugger new.
+	
 	^ node
 ]
 
@@ -129,5 +152,12 @@ GameboxApp >> start [
 	(document getElementById: #stop)
 		addEventListener: #click
 		block: [ clock stop ].
-		
+	(document getElementById: #tps)
+		addEventListener: #input
+		block: [ clock requestedTps: (document getElementById: #tps) value ].
+	(document getElementById: #timeFactor)
+		addEventListener: #input
+		block: [
+			clock timeFactor:
+				(document getElementById: #timeFactor) value asInteger / 100 ]
 ]

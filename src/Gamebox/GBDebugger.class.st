@@ -29,8 +29,8 @@ GBDebugger >> addedTo: anElement [
 			sum := 0.
 			lastPeriods do: [ :i | sum := sum + i ].
 
-			sum = 0 ifFalse: [ debugText text: 'fps: ' , (10000 / sum) asInteger ].
-			console log: debugText text ]
+			sum = 0 ifFalse: [
+				debugText text: 'fps: ' , (10000 / sum) asInteger ] ]
 		for: self
 ]
 

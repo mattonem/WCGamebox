@@ -8,7 +8,7 @@ Class {
 { #category : 'drawing' }
 GBDrawable >> addedTo: aNode [
 
-	announcer
+	aNode announcer
 		when: GBDrawingNow 
 		do: [ :evt | self drawOn: evt context ]
 		for: self

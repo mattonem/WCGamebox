@@ -3,6 +3,12 @@ Class {
 	#superclass : 'PjFileBasedWebApp',
 	#traits : 'StaticComponentHolder',
 	#classTraits : 'StaticComponentHolder classTrait',
+	#instVars : [
+		'clock'
+	],
+	#classInstVars : [
+		'staticComponents'
+	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
 }
@@ -19,32 +25,6 @@ GameboxApp class >> bridgeClientClass [
 	<pharoJsSkip>
 	
 	^ PjZnHostedBrowserBridgeClient
-]
-
-{ #category : 'description' }
-GameboxApp class >> circleFab [
-
-	| circle ref node circle2 ref2 img|
-	circle := GBCircle new radius: 100.
-	circle2 := GBCircle new radius: 30.
-	img := GBSVG new url: 'https://www.svgrepo.com/show/404920/camping.svg'; yourself.
-	node := GBNode new.
-	ref := GBDrawingReference new
-		       name: 'Circle';
-		       position: 100 @ 100;
-		       angle: 180 degreesToRadians;
-		       yourself.
-	ref2 := GBDrawingReference new
-		        name: 'Circle';
-		        position: 200 @ 200;
-		        angle: 10 degreesToRadians;
-		        yourself.
-	ref2 addElement: img.
-	ref addElement: circle.
-	
-	node addElement: ref.
-	node addElement: ref2.
-	^ node
 ]
 
 { #category : 'description' }
@@ -75,9 +55,13 @@ GameboxApp class >> generateHtmlUsing: html [
 						with: [
 							self addComponent: (WCGameBoxCanvas on: html) named: #plotter.
 							html div
-								id: #renderButton;
+								id: #start;
 								class: 'btn btn-primary';
-								with: 'render' ] ] ]
+								with: 'start'.
+							html div
+								id: #stop;
+								class: 'btn btn-primary';
+								with: 'stop' ] ] ]
 ]
 
 { #category : 'description' }
@@ -89,14 +73,55 @@ GameboxApp class >> updateHtmlRoot: root [
 		'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'
 ]
 
+{ #category : 'as yet unclassified' }
+GameboxApp >> circleFab [
+
+	| node ref2 img orchestrator drawEvent animation |
+	drawEvent := GBDrawSequenceStart new
+		             context: (self componentNamed: #plotter) context;
+		             yourself.
+	animation := GBRotationAnnimation new.
+	orchestrator := GBOchestrator new
+		                sequence: {
+				                GBCalculate new.
+				                GBUpdate new.
+				                drawEvent };
+		                yourself.
+
+	clock := GBClock new.
+	img := GBImage new
+		       url: 'https://www.svgrepo.com/show/404920/camping.svg';
+		       yourself.
+	node := GBNode new.
+
+	ref2 := GBDrawingReference new
+		        name: 'Circle';
+		        position: 200 @ 200;
+		        angle: 10 degreesToRadians;
+		        yourself.
+
+	ref2 addElement: img.
+	ref2 addElement: animation.
+	node addElement: ref2.
+	node addElement: clock.
+	node addElement: orchestrator.
+	node addElement: GBDrawSequencer new.
+
+	^ node
+]
+
 { #category : 'initialize-release' }
 GameboxApp >> start [
 
 	super start.
 
 	self initializeComponentHolder.
-	(document getElementById: #renderButton)
+
+	(self componentNamed: #plotter) scene: self circleFab.
+	(document getElementById: #start)
 		addEventListener: #click
-		block: [ (self componentNamed: #plotter) update ].
-	(self componentNamed: #plotter) scene: self class circleFab
+		block: [ clock start ].
+	(document getElementById: #stop)
+		addEventListener: #click
+		block: [ clock stop ]
 ]

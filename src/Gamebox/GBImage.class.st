@@ -1,5 +1,5 @@
 Class {
-	#name : 'GBSVG',
+	#name : 'GBImage',
 	#superclass : 'GBDrawable',
 	#instVars : [
 		'img'
@@ -12,24 +12,23 @@ Class {
 }
 
 { #category : 'accessing' }
-GBSVG >> drawOn: ctx [
+GBImage >> drawOn: ctx [
 
 	ctx drawImage: img with: 0 with: 0
 ]
 
 { #category : 'accessing' }
-GBSVG >> initialize [
+GBImage >> initialize [
 
 	super initialize.
 	img := Image new
 		       src:
 			       'https://www.svgrepo.com/show/404920/camping.svg';
 		       yourself.
-	console log: self
 ]
 
 { #category : 'accessing' }
-GBSVG >> url: anObject [
+GBImage >> url: anObject [
 
 	img src: anObject
 ]

@@ -2,8 +2,7 @@ Class {
 	#name : 'GBElement',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'announcer'
+		'name'
 	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
@@ -14,16 +13,9 @@ GBElement >> addedTo: anElement [
 ]
 
 { #category : 'as yet unclassified' }
-GBElement >> announcer [
-
-	^ announcer 
-]
-
-{ #category : 'as yet unclassified' }
 GBElement >> initialize [
 
 	super initialize.
-	announcer := Announcer new.
 ]
 
 { #category : 'as yet unclassified' }

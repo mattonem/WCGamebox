@@ -2,7 +2,8 @@ Class {
 	#name : 'GBNode',
 	#superclass : 'GBElement',
 	#instVars : [
-		'children'
+		'children',
+		'announcer'
 	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
@@ -12,7 +13,22 @@ Class {
 GBNode >> addElement: anObject [ 
 	children add: anObject.
 	anObject addedTo: self.
-	announcer announce: (ChildAdded new child: anObject)
+	announcer announce: (GBChildAdded new child: anObject)
+]
+
+{ #category : 'adding' }
+GBNode >> addedTo: aNode [
+
+	aNode announcer
+		when: self forwardEvent
+		do: [ :ev | announcer announce: ev ]
+		for: self.
+	
+]
+
+{ #category : 'initialization' }
+GBNode >> announcer [
+	^ announcer
 ]
 
 { #category : 'initialization' }
@@ -22,7 +38,7 @@ GBNode >> children [
 
 { #category : 'adding' }
 GBNode >> forwardEvent [ 
-	^ GBAnnouncement 
+	^ GBAnnouncement - GBTick - GBClear
 ]
 
 { #category : 'adding' }
@@ -30,8 +46,6 @@ GBNode >> initialize [
 
 	super initialize.
 	children := OrderedCollection new.
-	announcer
-		when: self forwardEvent
-		do: [ :evt | children do: [ :c | c announcer announce: evt ] ]
-		for: self
+	announcer := Announcer new.
+
 ]

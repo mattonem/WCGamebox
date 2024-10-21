@@ -4,3 +4,7 @@ Class {
 	#category : 'Gamebox',
 	#package : 'Gamebox'
 }
+
+{ #category : 'as yet unclassified' }
+GBAnnouncement >> withTick: aTickAnnoucmenet [
+]

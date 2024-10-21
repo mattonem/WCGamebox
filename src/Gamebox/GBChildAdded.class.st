@@ -1,6 +1,6 @@
 Class {
-	#name : 'ChildAdded',
-	#superclass : 'Announcement',
+	#name : 'GBChildAdded',
+	#superclass : 'GBAnnouncement',
 	#instVars : [
 		'child'
 	],
@@ -9,6 +9,6 @@ Class {
 }
 
 { #category : 'accessing' }
-ChildAdded >> child: anObject [ 
+GBChildAdded >> child: anObject [ 
 	child := anObject
 ]

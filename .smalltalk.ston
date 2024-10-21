@@ -1,0 +1,19 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'Gamebox',
+      #directory : 'src',  
+      #platforms : [ #pharo ]
+    }
+  ],
+  #postLoading : [
+    'scripts/exportApp.st'
+  ],
+  #testing : { 
+    #failOnZeroTests : false,
+    #categories : [ 'Gamebox-Tests' ],
+    #coverage : {
+      #packages : [ 'Gamebox' ]
+    }
+  }
+}

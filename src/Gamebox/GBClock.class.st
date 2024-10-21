@@ -38,8 +38,7 @@ GBClock >> loop [
 	nextUpdateDue := loopStartTime + requestedPeriodMs.
 	lastUpdate := loopStartTime.
 	dt := nextUpdateDue - self timeNow.
-	console log: dt.
-	window setTimeout: [ self loop ] and: dt 
+	window setTimeout: [ self loop ] and: dt
 ]
 
 { #category : 'as yet unclassified' }

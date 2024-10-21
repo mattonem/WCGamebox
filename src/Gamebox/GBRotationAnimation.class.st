@@ -1,6 +1,6 @@
 Class {
-	#name : 'GBRotationAnnimation',
-	#superclass : 'GBReferenceAnnimation',
+	#name : 'GBRotationAnimation',
+	#superclass : 'GBReferenceAnimation',
 	#pools : [
 		'PjBrowserGlobals'
 	],
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'accessing' }
-GBRotationAnnimation >> calculateNextPosition: aReference with: ev [
+GBRotationAnimation >> calculateNextPosition: aReference with: ev [
 
 	nextPosition := aReference position.
 	nextAngle := (aReference deg + (ev duration * 1)) degreesToRadians.

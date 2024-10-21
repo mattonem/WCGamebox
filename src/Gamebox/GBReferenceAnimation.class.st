@@ -1,5 +1,5 @@
 Class {
-	#name : 'GBReferenceAnnimation',
+	#name : 'GBReferenceAnimation',
 	#superclass : 'GBElement',
 	#instVars : [
 		'nextPosition',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-GBReferenceAnnimation >> addedTo: aReference [
+GBReferenceAnimation >> addedTo: aReference [
 	
 	aReference announcer
 		when: GBCalculate
@@ -25,18 +25,18 @@ GBReferenceAnnimation >> addedTo: aReference [
 ]
 
 { #category : 'accessing' }
-GBReferenceAnnimation >> calculateNextPosition: aReference with: ev [ 
+GBReferenceAnimation >> calculateNextPosition: aReference with: ev [ 
 	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-GBReferenceAnnimation >> nextAngle [
+GBReferenceAnimation >> nextAngle [
 
 	^ nextAngle
 ]
 
 { #category : 'accessing' }
-GBReferenceAnnimation >> nextPosition [
+GBReferenceAnimation >> nextPosition [
 
 	^ nextPosition
 ]

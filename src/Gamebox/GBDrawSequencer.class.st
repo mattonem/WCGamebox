@@ -1,6 +1,6 @@
 Class {
 	#name : 'GBDrawSequencer',
-	#superclass : 'GBOchestrator',
+	#superclass : 'GBElement',
 	#pools : [
 		'PjDomGlobals'
 	],

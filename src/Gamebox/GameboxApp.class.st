@@ -53,15 +53,16 @@ GameboxApp class >> generateHtmlUsing: html [
 					html div
 						class: 'card-body';
 						with: [
-							self addComponent: (WCGameBoxCanvas on: html) named: #plotter.
+							html div with: [
+									self addComponent: (WCGameBoxCanvas on: html) named: #plotter ].
 							html div
 								id: #start;
 								class: 'btn btn-primary';
-								with: 'start'.
+								with: 'Start Animation'.
 							html div
 								id: #stop;
 								class: 'btn btn-primary';
-								with: 'stop' ] ] ]
+								with: 'Stop Animation' ] ] ]
 ]
 
 { #category : 'description' }
@@ -74,13 +75,13 @@ GameboxApp class >> updateHtmlRoot: root [
 ]
 
 { #category : 'as yet unclassified' }
-GameboxApp >> circleFab [
+GameboxApp >> sceneFactory [
 
-	| node ref2 img orchestrator drawEvent animation |
+	| node ref2 img orchestrator drawEvent animation ref |
 	drawEvent := GBDrawSequenceStart new
 		             context: (self componentNamed: #plotter) context;
 		             yourself.
-	animation := GBRotationAnnimation new.
+	animation := GBRotationAnimation new.
 	orchestrator := GBOchestrator new
 		                sequence: {
 				                GBCalculate new.
@@ -89,20 +90,24 @@ GameboxApp >> circleFab [
 		                yourself.
 
 	clock := GBClock new.
+	clock requestedTps: 120.
 	img := GBImage new
-		       url: 'https://www.svgrepo.com/show/404920/camping.svg';
+		       url: 'https://www.svgrepo.com/show/219787/camping-tent.svg';
 		       yourself.
 	node := GBNode new.
-
 	ref2 := GBDrawingReference new
-		        name: 'Circle';
-		        position: 200 @ 200;
-		        angle: 10 degreesToRadians;
+		        name: 'center';
+		        position: -400 @ -400;
 		        yourself.
-
+	ref := GBDrawingReference new
+		       name: 'Image';
+		       position: 500 @ 500;
+		       yourself.
+		
+	ref addElement: ref2.
 	ref2 addElement: img.
-	ref2 addElement: animation.
-	node addElement: ref2.
+	ref addElement: animation.
+	node addElement: ref.
 	node addElement: clock.
 	node addElement: orchestrator.
 	node addElement: GBDrawSequencer new.
@@ -117,11 +122,12 @@ GameboxApp >> start [
 
 	self initializeComponentHolder.
 
-	(self componentNamed: #plotter) scene: self circleFab.
+	(self componentNamed: #plotter) scene: self sceneFactory.
 	(document getElementById: #start)
 		addEventListener: #click
 		block: [ clock start ].
 	(document getElementById: #stop)
 		addEventListener: #click
-		block: [ clock stop ]
+		block: [ clock stop ].
+		
 ]

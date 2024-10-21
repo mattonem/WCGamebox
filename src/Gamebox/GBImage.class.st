@@ -23,7 +23,7 @@ GBImage >> initialize [
 	super initialize.
 	img := Image new
 		       src:
-			       'https://www.svgrepo.com/show/404920/camping.svg';
+			       'https://www.svgrepo.com/show/219787/camping-tent.svg';
 		       yourself.
 ]
 

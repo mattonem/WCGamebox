@@ -7,7 +7,8 @@ Class {
 		'lastUpdate',
 		'requestedPeriodMs',
 		'lastPeriod',
-		'timeFactor'
+		'timeFactor',
+		'timeoutId'
 	],
 	#pools : [
 		'PjDomGlobals'
@@ -43,13 +44,14 @@ GBClock >> loop [
 
 	| dt loopStartTime nextUpdateDue |
 	loopStartTime := self timeNow.
+	window clearTimeout: timeoutId.
 	lastPeriod := loopStartTime - lastUpdate + 1.
 	started ifFalse: [ ^ self ].
 	self tick.
 	nextUpdateDue := loopStartTime + requestedPeriodMs.
 	lastUpdate := loopStartTime.
 	dt := nextUpdateDue - self timeNow.
-	window setTimeout: [ self loop ] and: dt
+	timeoutId := window setTimeout: [ self loop ] and: dt
 ]
 
 { #category : 'as yet unclassified' }

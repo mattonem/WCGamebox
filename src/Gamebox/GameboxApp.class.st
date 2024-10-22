@@ -139,7 +139,6 @@ GameboxApp >> randomColor [
 	g := (value asInteger toString: 16) padStart: 2 with: '0'.
 	value := (0 to: 255) atRandom.
 	b := (value asInteger toString: 16) padStart: 2 with: '0'.
-	console log: '#' , r , g , b.
 	^ '#' , r , g , b
 ]
 

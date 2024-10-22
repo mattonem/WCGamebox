@@ -3,7 +3,8 @@ Class {
 	#superclass : 'GBNode',
 	#instVars : [
 		'position',
-		'angle'
+		'angle',
+		'scale'
 	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
@@ -47,7 +48,10 @@ GBDrawingReference >> drawChildren: anObject evt: evt [
 
 	anObject translate: position x and: position y.
 	anObject rotate: angle.
+	"ctx.scale(2, 2);"
+	anObject scale: scale x and: scale y.
 	children do: [ :child | announcer announce: evt ].
+	anObject scale: 1 / scale x and: 1 / scale y.
 	anObject rotate: 0 - angle.
 	anObject translate: 0 - position x and: 0 - position y
 ]
@@ -63,7 +67,8 @@ GBDrawingReference >> initialize [
 
 	super initialize.
 	angle := 0.
-	position := 0 @ 0
+	position := 0 @ 0.
+	scale := 1 @ 1
 ]
 
 { #category : 'accessing' }
@@ -76,4 +81,16 @@ GBDrawingReference >> position [
 GBDrawingReference >> position: anObject [
 
 	position := anObject
+]
+
+{ #category : 'accessing' }
+GBDrawingReference >> scale [
+
+	^ scale
+]
+
+{ #category : 'accessing' }
+GBDrawingReference >> scale: anObject [
+
+	scale := anObject
 ]

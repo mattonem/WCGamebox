@@ -14,8 +14,8 @@ Class {
 { #category : 'accessing' }
 GBRotationAnimation >> calculateNextPosition: aReference with: ev [
 
-	nextPosition := aReference position.
-	nextAngle := (aReference deg + (ev duration * speed)) degreesToRadians.
+	nextAngle := (aReference deg + (ev duration * speed))
+		             degreesToRadians.
 ]
 
 { #category : 'accessing' }

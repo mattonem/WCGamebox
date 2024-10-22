@@ -100,7 +100,7 @@ GameboxApp class >> updateHtmlRoot: root [
 GameboxApp >> polygonFactory [
 
 	| ref |
-	ref := GBDrawingReference new position: 100 @ 100.
+	ref := GBDrawingReference new position: 100 @ 100; scale: 2@2.
 	ref
 		addElement: (GBPolygon new
 				 color: 'green';

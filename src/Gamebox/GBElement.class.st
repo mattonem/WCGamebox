@@ -13,6 +13,11 @@ GBElement >> addedTo: anElement [
 ]
 
 { #category : 'as yet unclassified' }
+GBElement >> deleteFrom: aNode [ 
+	aNode announcer unsubscribe: self
+]
+
+{ #category : 'as yet unclassified' }
 GBElement >> initialize [
 
 	super initialize.

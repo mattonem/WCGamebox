@@ -49,3 +49,10 @@ GBNode >> initialize [
 	announcer := Announcer new.
 
 ]
+
+{ #category : 'initialization' }
+GBNode >> removeElement: anElement [
+	children remove: anElement.
+	anElement deleteFrom: self.
+	announcer announce: (GBChildRemoved new child: anElement)
+]

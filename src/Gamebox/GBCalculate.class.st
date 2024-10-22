@@ -14,6 +14,7 @@ GBCalculate >> duration [
 ]
 
 { #category : 'as yet unclassified' }
-GBCalculate >> withTick:anEvt [
-	duration := anEvt duration
+GBCalculate >> withTick: anEvt [
+	duration := anEvt duration.
+	
 ]

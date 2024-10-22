@@ -1,6 +1,9 @@
 Class {
 	#name : 'GBRotationAnimation',
 	#superclass : 'GBReferenceAnimation',
+	#instVars : [
+		'speed'
+	],
 	#pools : [
 		'PjBrowserGlobals'
 	],
@@ -12,5 +15,23 @@ Class {
 GBRotationAnimation >> calculateNextPosition: aReference with: ev [
 
 	nextPosition := aReference position.
-	nextAngle := (aReference deg + (ev duration * 1)) degreesToRadians.
+	nextAngle := (aReference deg + (ev duration * speed)) degreesToRadians.
+]
+
+{ #category : 'accessing' }
+GBRotationAnimation >> initialize [ 
+	super initialize.
+	speed := 1.
+]
+
+{ #category : 'accessing' }
+GBRotationAnimation >> speed [
+
+	^ speed
+]
+
+{ #category : 'accessing' }
+GBRotationAnimation >> speed: anObject [
+
+	speed := anObject
 ]

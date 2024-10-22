@@ -62,8 +62,8 @@ GameboxApp class >> generateHtmlUsing: html [
 										with: 'TPS: '.
 									html inputRange
 										min: 1;
-										max: 120;
-										value: 60;
+										max: 240;
+										value: 120;
 										class: 'form-range';
 										id: 'tps' ].
 							html div with: [
@@ -97,6 +97,27 @@ GameboxApp class >> updateHtmlRoot: root [
 ]
 
 { #category : 'as yet unclassified' }
+GameboxApp >> polygonFactory [
+
+	| ref |
+	ref := GBDrawingReference new position: 100 @ 100.
+	ref
+		addElement: (GBPolygon new
+				 color: 'green';
+				 points: {
+						 (20 @ 0).
+						 (10 @ (20 * (3 sqrt / 2))).
+						 (-10 @ (20 * (3 sqrt / 2))).
+						 (-20 @ 0).
+						 (-10 @ (20 * (0 - 3 sqrt / 2))).
+						 (10 @ (20 * (0 - 3 sqrt / 2))) };
+				 yourself);
+		addElement: (GBRotationAnimation new speed: -3).
+
+	^ ref
+]
+
+{ #category : 'as yet unclassified' }
 GameboxApp >> sceneFactory [
 
 	| node ref2 img orchestrator drawEvent animation ref |
@@ -112,7 +133,7 @@ GameboxApp >> sceneFactory [
 		                yourself.
 
 	clock := GBClock new.
-	clock requestedTps: 60.
+	clock requestedTps: 120.
 	img := GBImage new
 		       url: 'https://www.svgrepo.com/show/219787/camping-tent.svg';
 		       yourself.
@@ -134,6 +155,7 @@ GameboxApp >> sceneFactory [
 	node addElement: orchestrator.
 	node addElement: GBDrawSequencer new.
 	node addElement: GBDebugger new.
+	node addElement: self polygonFactory.
 	
 	^ node
 ]

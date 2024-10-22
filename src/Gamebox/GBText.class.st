@@ -12,6 +12,7 @@ Class {
 GBText >> drawOn: ctx [
 
 	ctx font: '48px serif'.
+	ctx fillStyle: 'black'.
 	ctx fillText: text position: 0 and: 0
 ]
 

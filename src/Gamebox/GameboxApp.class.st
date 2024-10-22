@@ -84,7 +84,11 @@ GameboxApp class >> generateHtmlUsing: html [
 							html div
 								id: #stop;
 								class: 'btn btn-primary';
-								with: 'Stop Animation' ] ] ]
+								with: 'Stop Animation'.
+							html div
+								id: #addShape;
+								class: 'btn btn-primary';
+								with: 'Add shape' ] ] ]
 ]
 
 { #category : 'description' }
@@ -96,6 +100,13 @@ GameboxApp class >> updateHtmlRoot: root [
 		'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'
 ]
 
+{ #category : 'initialize-release' }
+GameboxApp >> addShapeTo: aScene [
+
+	aScene addElement: (self polygonFactory position:
+			 (0 to: 1000) atRandom @ (0 to: 1000) atRandom)
+]
+
 { #category : 'as yet unclassified' }
 GameboxApp >> polygonFactory [
 
@@ -103,7 +114,7 @@ GameboxApp >> polygonFactory [
 	ref := GBDrawingReference new position: 100 @ 100; scale: 2@2.
 	ref
 		addElement: (GBPolygon new
-				 color: 'green';
+				 color: self randomColor ;
 				 points: {
 						 (20 @ 0).
 						 (10 @ (20 * (3 sqrt / 2))).
@@ -116,6 +127,20 @@ GameboxApp >> polygonFactory [
 		addElement: (GBSinusScale new).
 
 	^ ref
+]
+
+{ #category : 'as yet unclassified' }
+GameboxApp >> randomColor [
+
+	| value r g b |
+	value := (0 to: 255) atRandom.
+	r := (value asInteger toString: 16) padStart: 2 with: '0'.
+	value := (0 to: 255) atRandom.
+	g := (value asInteger toString: 16) padStart: 2 with: '0'.
+	value := (0 to: 255) atRandom.
+	b := (value asInteger toString: 16) padStart: 2 with: '0'.
+	console log: '#' , r , g , b.
+	^ '#' , r , g , b
 ]
 
 { #category : 'as yet unclassified' }
@@ -182,5 +207,8 @@ GameboxApp >> start [
 		addEventListener: #input
 		block: [
 			clock timeFactor:
-				(document getElementById: #timeFactor) value asInteger / 100 ]
+				(document getElementById: #timeFactor) value asInteger / 100 ].
+	(document getElementById: #addShape)
+		addEventListener: #click
+		block: [ self addShapeTo: (self componentNamed: #plotter) scene ]
 ]

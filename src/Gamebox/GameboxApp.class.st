@@ -112,7 +112,8 @@ GameboxApp >> polygonFactory [
 						 (-10 @ (20 * (0 - 3 sqrt / 2))).
 						 (10 @ (20 * (0 - 3 sqrt / 2))) };
 				 yourself);
-		addElement: (GBRotationAnimation new speed: -3).
+		addElement: (GBRotationAnimation new speed: -3);
+		addElement: (GBSinusScale new).
 
 	^ ref
 ]

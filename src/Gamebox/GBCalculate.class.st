@@ -2,7 +2,8 @@ Class {
 	#name : 'GBCalculate',
 	#superclass : 'GBAnnouncement',
 	#instVars : [
-		'duration'
+		'duration',
+		'clock'
 	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
@@ -16,5 +17,5 @@ GBCalculate >> duration [
 { #category : 'as yet unclassified' }
 GBCalculate >> withTick: anEvt [
 	duration := anEvt duration.
-	
+	clock := anEvt clock.
 ]

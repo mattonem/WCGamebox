@@ -13,9 +13,9 @@ Class {
 { #category : 'accessing' }
 GBReferenceAnimation >> _calculateNextPosition: aReference with: ev [
 
-	nextPosition := aReference position.
-	nextAngle := aReference angle.
-	nextScale := aReference scale.
+	nextPosition := nil.
+	nextAngle := nil.
+	nextScale := nil.
 	self calculateNextPosition: aReference with: ev
 ]
 
@@ -28,11 +28,7 @@ GBReferenceAnimation >> addedTo: aReference [
 		for: self.
 	aReference announcer
 		when: GBUpdate
-		do: [
-			aReference
-				position: self nextPosition;
-				angle: self nextAngle;
-				scale: self nextScale ]
+		do: [ self updateReference: aReference ]
 		for: self
 ]
 
@@ -57,4 +53,13 @@ GBReferenceAnimation >> nextPosition [
 GBReferenceAnimation >> nextScale [
 
 	^ nextScale
+]
+
+{ #category : 'as yet unclassified' }
+GBReferenceAnimation >> updateReference: aReference [
+
+	nextPosition ifNotNil: [ aReference position: nextPosition ].
+	nextAngle ifNotNil: [ aReference angle: nextAngle ].
+	nextScale ifNotNil: [ aReference scale: nextScale ].
+	
 ]

@@ -8,7 +8,8 @@ Class {
 		'requestedPeriodMs',
 		'lastPeriod',
 		'timeFactor',
-		'timeoutId'
+		'timeoutId',
+		'startedAt'
 	],
 	#pools : [
 		'PjDomGlobals'
@@ -64,7 +65,13 @@ GBClock >> requestedTps: anInteger [
 GBClock >> start [
 	started := true.
 	lastUpdate := self timeNow.
+	startedAt := lastUpdate.
 	self loop. 
+]
+
+{ #category : 'as yet unclassified' }
+GBClock >> startedAt [
+	^ startedAt
 ]
 
 { #category : 'as yet unclassified' }
@@ -79,6 +86,7 @@ GBClock >> tick [
 	dt := self timeNow - lastUpdate.
 	parent announcer announce: (GBTick new
 			 duration: timeFactor * dt / requestedPeriodMs;
+			 clock: self;
 			 yourself)
 ]
 

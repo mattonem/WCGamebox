@@ -74,7 +74,7 @@ GameboxApp class >> generateHtmlUsing: html [
 									with: 'TimeSpeed: '.
 								html inputRange
 									min: 1;
-									max: 200;
+									max: 1000;
 									value: 100;
 									class: 'form-range';
 									id: 'timeFactor' ].
@@ -107,7 +107,7 @@ GameboxApp >> addShapeTo: aScene [
 	| el |
 	aScene addElement: (el := self polygonFactory position:
 			       (0 to: 1000) atRandom @ (0 to: 1000) atRandom).
-	aScene triggerElementLast: debug
+	aScene triggerElementFirst: debug
 ]
 
 { #category : 'as yet unclassified' }

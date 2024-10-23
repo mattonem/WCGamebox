@@ -64,5 +64,6 @@ GBNode >> triggerElementFirst: anElement [
 
 { #category : 'adding' }
 GBNode >> triggerElementLast: anElement [
+	"If anElement contains/is UI elements, this will make it appear in front of all other UI elements in the node."
 	announcer bringLast: anElement
 ]

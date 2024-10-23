@@ -12,6 +12,6 @@ Class {
 GBSinusScale >> calculateNextPosition: aReference with: ev [
 
 	| factor |
-	factor := (ev clock timeNow - ev clock startedAt / 100) cos + 1.5.
-	nextScale :=  factor @ factor
+	factor := (ev clock timeNow / 100) cos + 1.5.
+	nextScale := factor @ factor
 ]

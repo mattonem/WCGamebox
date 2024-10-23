@@ -9,7 +9,8 @@ Class {
 		'lastPeriod',
 		'timeFactor',
 		'timeoutId',
-		'startedAt'
+		'startedAt',
+		'timeNow'
 	],
 	#pools : [
 		'PjDomGlobals'
@@ -17,6 +18,12 @@ Class {
 	#category : 'Gamebox',
 	#package : 'Gamebox'
 }
+
+{ #category : 'as yet unclassified' }
+GBClock >> _timeNow [
+
+ ^ (window performance now) 
+]
 
 { #category : 'as yet unclassified' }
 GBClock >> addedTo: aNode [
@@ -31,6 +38,7 @@ GBClock >> initialize [
 	lastPeriod := 1.
 	self requestedTps: 60.
 	timeFactor := 1.
+	timeNow := self _timeNow 
 	
 ]
 
@@ -41,17 +49,22 @@ GBClock >> lastPeriod [
 ]
 
 { #category : 'as yet unclassified' }
+GBClock >> lastUpdate [
+	^ lastUpdate
+]
+
+{ #category : 'as yet unclassified' }
 GBClock >> loop [
 
 	| dt loopStartTime nextUpdateDue |
-	loopStartTime := self timeNow.
+	loopStartTime := self _timeNow.
 	window clearTimeout: timeoutId.
-	lastPeriod := loopStartTime - lastUpdate + 1.
+	lastPeriod := loopStartTime - lastUpdate.
 	started ifFalse: [ ^ self ].
 	self tick.
 	nextUpdateDue := loopStartTime + requestedPeriodMs.
 	lastUpdate := loopStartTime.
-	dt := nextUpdateDue - self timeNow.
+	dt := nextUpdateDue - self _timeNow.
 	timeoutId := window setTimeout: [ self loop ] and: dt
 ]
 
@@ -63,10 +76,12 @@ GBClock >> requestedTps: anInteger [
 
 { #category : 'as yet unclassified' }
 GBClock >> start [
+
 	started := true.
-	lastUpdate := self timeNow.
+	lastUpdate := self _timeNow.
 	startedAt := lastUpdate.
-	self loop. 
+	timeNow := 0.
+	self loop
 ]
 
 { #category : 'as yet unclassified' }
@@ -83,11 +98,12 @@ GBClock >> stop [
 GBClock >> tick [
 
 	| dt |
-	dt := self timeNow - lastUpdate.
+	dt := timeFactor * (self _timeNow - lastUpdate) / 16.
 	parent announcer announce: (GBTick new
-			 duration: timeFactor * dt / requestedPeriodMs;
+			 duration: dt;
 			 clock: self;
-			 yourself)
+			 yourself).
+	timeNow := timeNow + dt
 ]
 
 { #category : 'as yet unclassified' }
@@ -98,7 +114,7 @@ GBClock >> timeFactor: anInteger [
 { #category : 'as yet unclassified' }
 GBClock >> timeNow [
 
- ^ (window performance now) 
+ ^ timeNow
 ]
 
 { #category : 'as yet unclassified' }

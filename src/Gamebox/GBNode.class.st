@@ -38,7 +38,7 @@ GBNode >> children [
 
 { #category : 'adding' }
 GBNode >> forwardEvent [ 
-	^ GBAnnouncement - GBTick - GBClear
+	^ GBAnnouncement - GBTick 
 ]
 
 { #category : 'adding' }

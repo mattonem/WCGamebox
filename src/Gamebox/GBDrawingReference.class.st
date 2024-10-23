@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'position',
 		'angle',
-		'scale'
+		'scale',
+		'debugPointer'
 	],
 	#pools : [
 		'PjDomGlobals'

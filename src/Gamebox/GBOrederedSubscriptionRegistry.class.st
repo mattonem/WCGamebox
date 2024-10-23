@@ -9,22 +9,22 @@ Class {
 { #category : 'initialization' }
 GBOrederedSubscriptionRegistry >> bringFirst: subscriber [
 
-	^ self protected: [ | toRemove |
-		toRemove := subscriptions select: [ :subscription | subscription subscriber == subscriber ].
-		toRemove do: [ :e | e unregister ].
-		subscriptions removeAll: toRemove.
-		subscriptions addAllFirst: toRemove.
+	^ self protected: [ | toBeMoved |
+		toBeMoved := subscriptions select: [ :subscription | subscription subscriber == subscriber ].
+		toBeMoved do: [ :e | e unregister ].
+		subscriptions removeAll: toBeMoved.
+		subscriptions addAllFirst: toBeMoved.
 		 ]
 ]
 
 { #category : 'initialization' }
 GBOrederedSubscriptionRegistry >> bringLast: subscriber [
 
-	^ self protected: [ | toRemove |
-		toRemove := subscriptions select: [ :subscription | subscription subscriber == subscriber ].
-		toRemove do: [ :e | e unregister ].
-		subscriptions removeAll: toRemove.
-		subscriptions addAll: toRemove.
+	^ self protected: [ | toBeMoved |
+		toBeMoved := subscriptions select: [ :subscription | subscription subscriber == subscriber ].
+		toBeMoved do: [ :e | e unregister ].
+		subscriptions removeAll: toBeMoved.
+		subscriptions addAll: toBeMoved.
 		 ]
 ]
 

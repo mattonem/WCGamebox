@@ -113,23 +113,26 @@ GameboxApp >> addShapeTo: aScene [
 { #category : 'as yet unclassified' }
 GameboxApp >> polygonFactory [
 
-	| ref |
+	| ref poly |
 	ref := GBDrawingReference new
 		       position: 100 @ 100;
 		       scale: 2 @ 2.
 	ref
-		addElement: (GBPolygon new
-				 color: self randomColor;
-				 points: {
-						 (20 @ 0).
-						 (10 @ (20 * (3 sqrt / 2))).
-						 (-10 @ (20 * (3 sqrt / 2))).
-						 (-20 @ 0).
-						 (-10 @ (20 * (0 - 3 sqrt / 2))).
-						 (10 @ (20 * (0 - 3 sqrt / 2))) };
-				 yourself);
+		addElement: (poly := GBPolygon new
+				         color: self randomColor;
+				         points: {
+						         (20 @ 0).
+						         (10 @ (20 * (3 sqrt / 2))).
+						         (-10 @ (20 * (3 sqrt / 2))).
+						         (-20 @ 0).
+						         (-10 @ (20 * (0 - 3 sqrt / 2))).
+						         (10 @ (20 * (0 - 3 sqrt / 2))) };
+				         yourself);
 		addElement: (GBRotationAnimation new speed: -3);
-		addElement: GBSinusScale new.
+		addElement: GBSinusScale new;
+		addElement: (GBScript 
+				 on: GBMouseClick
+				 do: [ :e | console log: e ]).
 	^ ref
 ]
 
@@ -185,7 +188,9 @@ GameboxApp >> sceneFactory [
 	node addElement: GBDrawSequencer new.
 	node addElement: self polygonFactory.
 	node addElement: (debug := GBDebugger new).
-
+	node addElement: (GBCaptureMouseClick new
+			 onCanvas: (self componentNamed: #plotter);
+			 yourself).
 
 
 	^ node

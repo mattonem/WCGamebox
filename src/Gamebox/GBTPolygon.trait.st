@@ -9,7 +9,7 @@ Trait {
 
 { #category : 'accessing' }
 GBTPolygon >> contains: aPoint [
-
+"http://www.philliplemons.com/posts/ray-casting-algorithm"
 	| huge eps inside point |
 	point := aPoint copy.
 	huge := Float infinity.

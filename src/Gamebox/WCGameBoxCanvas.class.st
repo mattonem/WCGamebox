@@ -42,6 +42,21 @@ WCGameBoxCanvas >> getBoundingClientRect [
 ]
 
 { #category : 'rendering' }
+WCGameBoxCanvas >> onMouseClickDo: aBlock [
+
+	(self getElementById: #plot)
+		addEventListener: #click
+		block: [ :e |
+			| rect pos |
+			"rect := self getBoundingClientRect.
+			pos := e clientX - rect left @ (e clientY - rect top).
+			pos := (pos x * self width / rect width)  
+			       @ (pos y * self height / rect height).
+			pos := pos asIntegerPoint + (1 @ 1)."
+			aBlock cull: e ]
+]
+
+{ #category : 'rendering' }
 WCGameBoxCanvas >> onMouseMoveDo: aBlock [
 
 	(self getElementById: #plot)

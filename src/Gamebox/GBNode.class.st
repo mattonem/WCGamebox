@@ -59,6 +59,7 @@ GBNode >> removeElement: anElement [
 
 { #category : 'adding' }
 GBNode >> triggerElementFirst: anElement [
+	"If anElement contains/is UI elements, this will make it appear behind all other UI elements in the node."
 	announcer bringFirst: anElement
 ]
 

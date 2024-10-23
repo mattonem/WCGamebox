@@ -114,10 +114,12 @@ GameboxApp >> addShapeTo: aScene [
 GameboxApp >> polygonFactory [
 
 	| ref |
-	ref := GBDrawingReference new position: 100 @ 100; scale: 2@2.
+	ref := GBDrawingReference new
+		       position: 100 @ 100;
+		       scale: 2 @ 2.
 	ref
 		addElement: (GBPolygon new
-				 color: self randomColor ;
+				 color: self randomColor;
 				 points: {
 						 (20 @ 0).
 						 (10 @ (20 * (3 sqrt / 2))).
@@ -127,8 +129,7 @@ GameboxApp >> polygonFactory [
 						 (10 @ (20 * (0 - 3 sqrt / 2))) };
 				 yourself);
 		addElement: (GBRotationAnimation new speed: -3);
-		addElement: (GBSinusScale new).
-
+		addElement: GBSinusScale new.
 	^ ref
 ]
 

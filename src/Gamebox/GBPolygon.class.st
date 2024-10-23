@@ -1,8 +1,9 @@
 Class {
 	#name : 'GBPolygon',
 	#superclass : 'GBDrawable',
+	#traits : 'GBTPolygon',
+	#classTraits : 'GBTPolygon classTrait',
 	#instVars : [
-		'points',
 		'color'
 	],
 	#category : 'Gamebox',
@@ -36,39 +37,9 @@ GBPolygon >> drawOn: ctx [
 		fill
 ]
 
-{ #category : 'accessing' }
-GBPolygon >> edges [
-
-	| index edges |
-	index := 1.
-	edges := (points allButLast collect: [ :point |
-		          | edge |
-		          edge := {
-			                  (points at: index).
-			                  (points at: index + 1) }.
-		          index := index + 1.
-		          edge ]) asOrderedCollection.
-	edges add: {
-			points last.
-			points first }.
-	^ edges
-]
-
 { #category : 'drawing' }
 GBPolygon >> initialize [ 
 	super initialize.
-	points := OrderedCollection new.
+	self initializeGBTPolygon.
 	color := 'red'
-]
-
-{ #category : 'accessing' }
-GBPolygon >> points [
-
-	^ points
-]
-
-{ #category : 'accessing' }
-GBPolygon >> points: anObject [
-
-	points := anObject
 ]

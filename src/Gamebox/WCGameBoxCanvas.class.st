@@ -42,18 +42,23 @@ WCGameBoxCanvas >> getBoundingClientRect [
 ]
 
 { #category : 'rendering' }
+WCGameBoxCanvas >> height [
+	^ (self getElementById: #plot) getAttribute: #height 
+]
+
+{ #category : 'rendering' }
 WCGameBoxCanvas >> onMouseClickDo: aBlock [
 
 	(self getElementById: #plot)
 		addEventListener: #click
 		block: [ :e |
 			| rect pos |
-			"rect := self getBoundingClientRect.
+			rect := self getBoundingClientRect.
 			pos := e clientX - rect left @ (e clientY - rect top).
 			pos := (pos x * self width / rect width)  
 			       @ (pos y * self height / rect height).
-			pos := pos asIntegerPoint + (1 @ 1)."
-			aBlock cull: e ]
+			pos := pos asIntegerPoint + (1 @ 1).
+			aBlock cull: pos]
 ]
 
 { #category : 'rendering' }
@@ -79,7 +84,7 @@ WCGameBoxCanvas >> renderHtmlOn: html [
 		width: 1000;
 		height: 1000;
 		class: 'mx-auto';
-		style: 'width: 300px; height:300px;'
+		style: 'width: 300px; height:300px; user-select: none; '
 ]
 
 { #category : 'accessing' }
@@ -106,4 +111,9 @@ WCGameBoxCanvas >> update [
 	scene announcer announce: (GBDrawingNow new
 			 context: self context;
 			 yourself)
+]
+
+{ #category : 'rendering' }
+WCGameBoxCanvas >> width [
+	^ (self getElementById: #plot) getAttribute: #width 
 ]

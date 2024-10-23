@@ -130,9 +130,11 @@ GameboxApp >> polygonFactory [
 				         yourself);
 		addElement: (GBRotationAnimation new speed: -3);
 		addElement: GBSinusScale new;
-		addElement: (GBScript 
+		addElement: (GBScript
 				 on: GBMouseClick
-				 do: [ :e | console log: e ]).
+				 do: [ :e |
+					 (poly contains: e position) ifTrue: [
+						 poly color: self randomColor ] ]).
 	^ ref
 ]
 
@@ -189,6 +191,9 @@ GameboxApp >> sceneFactory [
 	node addElement: self polygonFactory.
 	node addElement: (debug := GBDebugger new).
 	node addElement: (GBCaptureMouseClick new
+			 onCanvas: (self componentNamed: #plotter);
+			 yourself).
+	node addElement: (GBCaptureMouseMove new
 			 onCanvas: (self componentNamed: #plotter);
 			 yourself).
 

@@ -6,6 +6,9 @@ Class {
 		'angle',
 		'scale'
 	],
+	#pools : [
+		'PjDomGlobals'
+	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
 }
@@ -17,6 +20,10 @@ GBDrawingReference >> addedTo: aNode [
 	aNode announcer
 		when: GBDrawingNow
 		do: [ :evt | self drawChildren: evt context evt: evt ]
+		for: self.
+	aNode announcer
+		when: GBMouseEvent
+		do: [ :evt | self handleMouseEvent: evt ]
 		for: self
 ]
 
@@ -50,7 +57,7 @@ GBDrawingReference >> drawChildren: anObject evt: evt [
 	anObject rotate: angle.
 	"ctx.scale(2, 2);"
 	anObject scale: scale x and: scale y.
-	children do: [ :child | announcer announce: evt ].
+	announcer announce: evt.
 	anObject scale: 1 / scale x and: 1 / scale y.
 	anObject rotate: 0 - angle.
 	anObject translate: 0 - position x and: 0 - position y
@@ -59,7 +66,19 @@ GBDrawingReference >> drawChildren: anObject evt: evt [
 { #category : 'accessing' }
 GBDrawingReference >> forwardEvent [
 
-	^ super forwardEvent - GBDrawingNow
+	^ super forwardEvent - GBDrawingNow - GBMouseEvent 
+]
+
+{ #category : 'accessing' }
+GBDrawingReference >> handleMouseEvent: ev [
+
+	| oldPos |
+	oldPos := ev position.
+	ev position: ev position - position.
+	ev position: (ev position rotateBy: angle about: 0 @ 0).
+	ev position: ev position x / scale x @ (ev position y / scale y).
+	announcer announce: ev.
+	ev position: oldPos
 ]
 
 { #category : 'accessing' }

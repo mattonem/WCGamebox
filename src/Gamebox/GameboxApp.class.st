@@ -107,7 +107,7 @@ GameboxApp >> addShapeTo: aScene [
 	| el |
 	aScene addElement: (el := self polygonFactory position:
 			       (0 to: 1000) atRandom @ (0 to: 1000) atRandom).
-	aScene triggerElementFirst: debug
+	aScene triggerElementLast: debug
 ]
 
 { #category : 'as yet unclassified' }

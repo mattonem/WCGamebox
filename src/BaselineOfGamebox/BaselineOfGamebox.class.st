@@ -14,5 +14,6 @@ BaselineOfGamebox >> baseline: spec [
 			baseline: 'Camping'
 			with: [ spec repository: 'github://mattonem/WildCamping:master' ].
 
-		spec package: #Gamebox with: [ spec requires: #( Camping ) ] ]
+		spec package: #Gamebox with: [ spec requires: #( Camping ) ].
+		spec package: #'Gamebox-Tests' with: [ spec requires: #( Gamebox ) ] ]
 ]

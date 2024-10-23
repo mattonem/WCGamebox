@@ -4,7 +4,8 @@ Class {
 	#traits : 'StaticComponentHolder',
 	#classTraits : 'StaticComponentHolder classTrait',
 	#instVars : [
-		'clock'
+		'clock',
+		'debug'
 	],
 	#classInstVars : [
 		'staticComponents'
@@ -103,8 +104,10 @@ GameboxApp class >> updateHtmlRoot: root [
 { #category : 'initialize-release' }
 GameboxApp >> addShapeTo: aScene [
 
-	aScene addElement: (self polygonFactory position:
-			 (0 to: 1000) atRandom @ (0 to: 1000) atRandom)
+	| el |
+	aScene addElement: (el := self polygonFactory position:
+			       (0 to: 1000) atRandom @ (0 to: 1000) atRandom).
+	aScene triggerElementLast: debug
 ]
 
 { #category : 'as yet unclassified' }
@@ -179,9 +182,11 @@ GameboxApp >> sceneFactory [
 	node addElement: clock.
 	node addElement: orchestrator.
 	node addElement: GBDrawSequencer new.
-	node addElement: GBDebugger new.
 	node addElement: self polygonFactory.
-	
+	node addElement: (debug := GBDebugger new).
+
+
+
 	^ node
 ]
 

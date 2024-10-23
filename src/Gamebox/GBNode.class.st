@@ -46,7 +46,7 @@ GBNode >> initialize [
 
 	super initialize.
 	children := OrderedCollection new.
-	announcer := Announcer new.
+	announcer := GBOrederedAnnouncer new.
 
 ]
 
@@ -55,4 +55,14 @@ GBNode >> removeElement: anElement [
 	children remove: anElement.
 	anElement deleteFrom: self.
 	announcer announce: (GBChildRemoved new child: anElement)
+]
+
+{ #category : 'adding' }
+GBNode >> triggerElementFirst: anElement [
+	announcer bringFirst: anElement
+]
+
+{ #category : 'adding' }
+GBNode >> triggerElementLast: anElement [
+	announcer bringLast: anElement
 ]

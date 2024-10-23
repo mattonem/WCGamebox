@@ -22,6 +22,11 @@ GBTick >> clock: anObject [
 ]
 
 { #category : 'accessing' }
+GBTick >> clockStartTime [	
+	^ clock startedAt 
+]
+
+{ #category : 'accessing' }
 GBTick >> duration [
 
 	^ duration

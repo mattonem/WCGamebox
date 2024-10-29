@@ -3,6 +3,8 @@ Trait {
 	#instVars : [
 		'points'
 	],
+	#traits : 'GBTGeometry',
+	#classTraits : 'GBTGeometry classTrait',
 	#category : 'Gamebox',
 	#package : 'Gamebox'
 }

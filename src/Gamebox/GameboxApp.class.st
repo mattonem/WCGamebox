@@ -5,7 +5,8 @@ Class {
 	#classTraits : 'StaticComponentHolder classTrait',
 	#instVars : [
 		'clock',
-		'debug'
+		'debug',
+		'reference'
 	],
 	#classInstVars : [
 		'staticComponents'
@@ -111,11 +112,62 @@ GameboxApp >> addShapeTo: aScene [
 ]
 
 { #category : 'as yet unclassified' }
+GameboxApp >> lightBlueBackground [
+
+	| node |
+	node := GBNode new.
+	node addElement: (GBPolygon new
+			 color: '#CCFFFF';
+			 points: {
+					 (-500 @ -500).
+					 (-500 @ 500).
+					 (500 @ 500).
+					 (500 @ -500) }).
+	^ node
+]
+
+{ #category : 'as yet unclassified' }
+GameboxApp >> logoFactory [
+
+	| node ref ref2 img |
+	clock := GBClock new.
+	clock requestedTps: 120.
+	img := GBImage new
+		       url: 'https://www.svgrepo.com/show/219787/camping-tent.svg';
+		       yourself.
+	node := GBNode new.
+	ref2 := GBDrawingReference new
+		        name: 'center';
+		        position: -400 @ -400;
+		        yourself.
+	ref := GBDrawingReference new
+		       name: 'scale';
+		       yourself.
+	ref2 addElement: img.
+	ref addElement: ref2.
+	node addElement: ref.
+	ref addElement: (GBMouseOverCircle new r: 400).
+	ref addElement: (GBMouseClickCircle new r: 400).
+	ref addElement: (GBScript new
+			 on: GBMouseOverStarted;
+			 do: [ :e | ref scale: 1.1 @ 1.1 ]).
+	ref addElement: (GBScript new
+			 on: GBMouseOverEnded;
+			 do: [ :e | ref scale: 1 @ 1 ]).
+	ref addElement: (GBScript new
+			 on: GBMouseElementClicked;
+			 do: [ :e | self startPolygonScene ]).
+
+
+	^ node
+]
+
+{ #category : 'as yet unclassified' }
 GameboxApp >> polygonFactory [
 
-	| ref poly |
+	| ref poly animation |
 	ref := GBDrawingReference new
-		       position: 100 @ 100;
+		       position: 0 @ 0;
 		       scale: 2 @ 2.
 	ref
 		addElement: (poly := GBPolygon new
@@ -128,13 +180,21 @@ GameboxApp >> polygonFactory [
 						         (-10 @ (20 * (0 - 3 sqrt / 2))).
 						         (10 @ (20 * (0 - 3 sqrt / 2))) };
 				         yourself);
-		addElement: (GBRotationAnimation new speed: -3);
-		addElement: GBSinusScale new;
-		addElement: (GBScript
-				 on: GBMouseClick
-				 do: [ :e |
-					 (poly contains: e position) ifTrue: [
-						 poly color: self randomColor ] ]).
+		addElement: (animation := GBRotationAnimation new speed: -3);
+		addElement: (GBMouseOverPolygon new points: poly points);
+		addElement: (GBMouseClickPolygon new points: poly points);
+		addElement: (GBScript new
+				 on: GBMouseOverStarted;
+				 do: [ :ev | animation speed: 0 ]);
+		addElement: (GBScript new
+				 on: GBMouseOverEnded;
+				 do: [ :ev | animation speed: -3 ]);
+		addElement: (GBScript new
+				 on: GBMouseElementClicked;
+				 do: [ :ev |
+					 reference addElement: (self polygonFactory
+								  position: (-500 to: 500) atRandom @ (-500 to: 500) atRandom;
+								  yourself) ]).
 	^ ref
 ]
 
@@ -154,41 +214,27 @@ GameboxApp >> randomColor [
 { #category : 'as yet unclassified' }
 GameboxApp >> sceneFactory [
 
-	| node ref2 img orchestrator drawEvent animation ref |
+	| node orchestrator drawEvent |
 	drawEvent := GBDrawSequenceStart new
 		             context: (self componentNamed: #plotter) context;
 		             yourself.
-	animation := GBRotationAnimation new.
+
 	orchestrator := GBOchestrator new
 		                sequence: {
 				                GBCalculate new.
 				                GBUpdate new.
 				                drawEvent };
 		                yourself.
-
 	clock := GBClock new.
 	clock requestedTps: 120.
-	img := GBImage new
-		       url: 'https://www.svgrepo.com/show/219787/camping-tent.svg';
-		       yourself.
 	node := GBNode new.
-	ref2 := GBDrawingReference new
-		        name: 'center';
-		        position: -400 @ -400;
-		        yourself.
-	ref := GBDrawingReference new
-		       name: 'Image';
-		       position: 500 @ 500;
-		       yourself.
-
-	ref addElement: ref2.
-	ref2 addElement: img.
-	ref addElement: animation.
-	node addElement: ref.
+	node addElement: (reference := GBDrawingReference new
+			              position: 500 @ 500;
+			              addElement: self logoFactory;
+			              yourself).
 	node addElement: clock.
 	node addElement: orchestrator.
 	node addElement: GBDrawSequencer new.
-	node addElement: self polygonFactory.
 	node addElement: (debug := GBDebugger new).
 	node addElement: (GBCaptureMouseClick new
 			 onCanvas: (self componentNamed: #plotter);
@@ -225,5 +271,13 @@ GameboxApp >> start [
 				(document getElementById: #timeFactor) value asInteger / 100 ].
 	(document getElementById: #addShape)
 		addEventListener: #click
-		block: [ self addShapeTo: (self componentNamed: #plotter) scene ]
+		block: [ self addShapeTo: (self componentNamed: #plotter) scene ].
+	clock start
+]
+
+{ #category : 'as yet unclassified' }
+GameboxApp >> startPolygonScene [
+	reference deleteAllChildren.
+	reference addElement: self lightBlueBackground.
+	reference addElement: self polygonFactory.
 ]

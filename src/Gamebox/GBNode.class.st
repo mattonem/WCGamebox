@@ -37,6 +37,11 @@ GBNode >> children [
 ]
 
 { #category : 'adding' }
+GBNode >> deleteAllChildren [
+	children do: [ :aChild | self removeElement: aChild ]
+]
+
+{ #category : 'adding' }
 GBNode >> forwardEvent [ 
 	^ GBAnnouncement - GBTick 
 ]

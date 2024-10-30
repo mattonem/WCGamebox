@@ -82,15 +82,11 @@ GameboxApp class >> generateHtmlUsing: html [
 							html div
 								id: #start;
 								class: 'btn btn-primary';
-								with: 'Start Animation'.
+								with: 'Start Clock'.
 							html div
 								id: #stop;
 								class: 'btn btn-primary';
-								with: 'Stop Animation'.
-							html div
-								id: #addShape;
-								class: 'btn btn-primary';
-								with: 'Add shape' ] ] ]
+								with: 'Stop Clock' ] ] ]
 ]
 
 { #category : 'description' }
@@ -269,9 +265,6 @@ GameboxApp >> start [
 		block: [
 			clock timeFactor:
 				(document getElementById: #timeFactor) value asInteger / 100 ].
-	(document getElementById: #addShape)
-		addEventListener: #click
-		block: [ self addShapeTo: (self componentNamed: #plotter) scene ].
 	clock start
 ]
 

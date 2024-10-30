@@ -1,6 +1,6 @@
 Class {
 	#name : 'GBClipperCircle',
-	#superclass : 'GBDrawingReference',
+	#superclass : 'GBNode',
 	#traits : 'GBTCircle',
 	#classTraits : 'GBTCircle classTrait',
 	#instVars : [
@@ -12,6 +12,17 @@ Class {
 	#category : 'Gamebox',
 	#package : 'Gamebox'
 }
+
+{ #category : 'comparing' }
+GBClipperCircle >> addedTo: aNode [
+
+	super addedTo: aNode.
+	aNode announcer
+		when: GBDrawingNow
+		do: [ :evt | self drawChildren: evt context evt: evt ]
+		for: self.
+
+]
 
 { #category : 'accessing' }
 GBClipperCircle >> center [
@@ -39,6 +50,12 @@ GBClipperCircle >> drawChildren: ctx evt: evt [
 	ctx clip.
 	announcer announce: evt.
 	ctx restore
+]
+
+{ #category : 'accessing' }
+GBClipperCircle >> forwardEvent [
+
+	^ super forwardEvent - GBDrawingNow  
 ]
 
 { #category : 'comparing' }

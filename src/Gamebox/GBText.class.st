@@ -3,7 +3,8 @@ Class {
 	#superclass : 'GBDrawable',
 	#instVars : [
 		'text',
-		'font'
+		'font',
+		'textAlign'
 	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
@@ -14,6 +15,7 @@ GBText >> drawOn: ctx [
 
 	ctx font: font.
 	ctx fillStyle: 'black'.
+	ctx textAlign: textAlign.
 	ctx fillText: text position: 0 and: 0
 ]
 
@@ -26,7 +28,8 @@ GBText >> font: aFontString [
 GBText >> initialize [ 
 	super initialize.
 	text := 'Default text'.
-	font := '48px serif'
+	font := '48px serif'.
+	textAlign := 'left'
 ]
 
 { #category : 'accessing' }
@@ -39,4 +42,10 @@ GBText >> text [
 GBText >> text: anObject [
 
 	text := anObject
+]
+
+{ #category : 'accessing' }
+GBText >> textAlign: anObject [
+
+	textAlign := anObject
 ]

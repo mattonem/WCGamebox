@@ -6,7 +6,8 @@ Class {
 	#instVars : [
 		'clock',
 		'debug',
-		'reference'
+		'reference',
+		'sceneTitle'
 	],
 	#classInstVars : [
 		'staticComponents'
@@ -325,6 +326,11 @@ GameboxApp >> sceneFactory [
 			 yourself).
 	node addElement: (bg := self lightBlueBackground).
 	node triggerElementFirst: bg.
+	(node translation: 500 @ 100) addElement: (sceneTitle := GBText new
+			               text: 'scene title';
+			               textAlign: 'center';
+			               font: '80px Arial';
+			               yourself).
 	self startLogoScene.
 	^ node
 ]
@@ -359,7 +365,7 @@ GameboxApp >> startClip [
 
 	| clip |
 	reference deleteAllChildren.
-
+	sceneTitle text: 'Clipping'.
 	reference addElement: (clip := GBClipperCircle new
 			         r: 100;
 			         addElement: self octopusFactory).
@@ -374,6 +380,7 @@ GameboxApp >> startClip [
 GameboxApp >> startLogoScene [
 
 	reference deleteAllChildren.
+	sceneTitle text: 'SVG'.
 	reference addElement: self logoFactory
 ]
 
@@ -382,5 +389,6 @@ GameboxApp >> startPolygonScene [
 
 	reference deleteAllChildren.
 	reference addElement: self polygonFactory.
+	sceneTitle text: 'Polygons'.
 	(reference translation: 300 @ 0) addElement: self polygonNextScene
 ]

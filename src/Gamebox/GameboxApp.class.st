@@ -157,6 +157,54 @@ GameboxApp >> logoFactory [
 ]
 
 { #category : 'as yet unclassified' }
+GameboxApp >> octopusFactory [
+
+	| ref ref2 |
+	ref := GBDrawingReference new
+		       scale: 0.2 @ 0.2;
+		       position: 0 @ 0.
+	ref2 := ref translation: 600 @ 0.
+	(ref2 translation: -400 @ -400) addElement: (GBImage new
+			 url: 'https://www.svgrepo.com/show/485003/octopus.svg';
+			 yourself).
+	ref addElement: (GBRotationAnimation new speed: -2).
+	^ ref
+]
+
+{ #category : 'as yet unclassified' }
+GameboxApp >> octopusNextScene [
+
+	| ref poly |
+	ref := GBDrawingReference new
+		       position: 0 @ 0;
+		       scale: 4 @ 4.
+	ref
+		addElement: (poly := GBPolygon new
+				         color: 'blue';
+				         points: {
+						         (-10 @ -5).
+						         (0 @ -5).
+						         (0 @ -10).
+						         (10 @ 0).
+						         (0 @ 10).
+						         (0 @ 5).
+						         (-10 @ 5) };
+				         yourself);
+		addElement: (GBMouseOverPolygon new points: poly points);
+		addElement: (GBMouseClickPolygon new points: poly points);
+		addElement: (GBScript new
+				 on: GBMouseOverStarted;
+				 do: [ :ev | ref scale: 8@8 ]);
+		addElement: (GBScript new
+				 on: GBMouseOverEnded;
+				 do: [ :ev | ref scale: 4@4 ]);
+		addElement: (GBScript new
+				 on: GBMouseElementClicked;
+				 do: [ :ev | self startLogoScene ]).
+	^ ref
+]
+
+{ #category : 'as yet unclassified' }
 GameboxApp >> polygonFactory [
 
 	| ref poly animation |
@@ -228,7 +276,7 @@ GameboxApp >> polygonNextScene [
 				 do: [ :ev | ref scale: 4@4 ]);
 		addElement: (GBScript new
 				 on: GBMouseElementClicked;
-				 do: [ :ev | self startLogoScene ]).
+				 do: [ :ev | self startClip ]).
 	^ ref
 ]
 
@@ -307,6 +355,22 @@ GameboxApp >> start [
 ]
 
 { #category : 'as yet unclassified' }
+GameboxApp >> startClip [
+
+	| clip |
+	reference deleteAllChildren.
+
+	reference addElement: (clip := GBClipperCircle new
+			         r: 100;
+			         addElement: self octopusFactory).
+	reference announcer
+		when: GBMouseGlobalMove
+		do: [ :e | clip center: e position ]
+		for: clip.
+	(reference translation: 300 @ 0) addElement: self octopusNextScene
+]
+
+{ #category : 'as yet unclassified' }
 GameboxApp >> startLogoScene [
 
 	reference deleteAllChildren.
@@ -316,8 +380,7 @@ GameboxApp >> startLogoScene [
 { #category : 'as yet unclassified' }
 GameboxApp >> startPolygonScene [
 
-	| position |
 	reference deleteAllChildren.
 	reference addElement: self polygonFactory.
-	(reference translation: 300 @ 0) addElement: self polygonNextScene 
+	(reference translation: 300 @ 0) addElement: self polygonNextScene
 ]

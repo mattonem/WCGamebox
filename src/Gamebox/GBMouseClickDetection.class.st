@@ -10,7 +10,7 @@ GBMouseClickDetection >> addedTo: aNode [
 
 	super addedTo: aNode.
 	aNode announcer
-		when: GBMouseClick
+		when: GBMouseGlobalClick
 		do: [ :ev |
 			(self contains: ev position) ifTrue: [
 				aNode announcer announce:

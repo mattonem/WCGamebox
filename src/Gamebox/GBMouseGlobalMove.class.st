@@ -1,5 +1,5 @@
 Class {
-	#name : 'GBMouseClick',
+	#name : 'GBMouseGlobalMove',
 	#superclass : 'GBMouseEvent',
 	#category : 'Gamebox',
 	#package : 'Gamebox'

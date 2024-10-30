@@ -52,16 +52,14 @@ GBDrawingReference >> deg: anObject [
 ]
 
 { #category : 'accessing' }
-GBDrawingReference >> drawChildren: anObject evt: evt [
+GBDrawingReference >> drawChildren: ctx evt: evt [
 
-	anObject translate: position x and: position y.
-	anObject rotate: angle.
-	"ctx.scale(2, 2);"
-	anObject scale: scale x and: scale y.
+	ctx save.
+	ctx translate: position x and: position y.
+	ctx rotate: angle.
+	ctx scale: scale x and: scale y.
 	announcer announce: evt.
-	anObject scale: 1 / scale x and: 1 / scale y.
-	anObject rotate: 0 - angle.
-	anObject translate: 0 - position x and: 0 - position y
+	ctx restore
 ]
 
 { #category : 'accessing' }
@@ -79,7 +77,7 @@ GBDrawingReference >> handleMouseEvent: ev [
 	ev position: (ev position rotateBy: angle about: 0 @ 0).
 	ev position: ev position x / scale x @ (ev position y / scale y).
 	announcer announce: ev.
-	ev position: oldPos
+	ev position: oldPos.
 ]
 
 { #category : 'accessing' }

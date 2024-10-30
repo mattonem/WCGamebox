@@ -38,7 +38,13 @@ GBNode >> children [
 
 { #category : 'adding' }
 GBNode >> deleteAllChildren [
-	children do: [ :aChild | self removeElement: aChild ]
+
+	| oldChildren |
+	oldChildren := children.
+	children := OrderedCollection new.
+	oldChildren do: [ :aChild |
+		aChild deleteFrom: self.
+		announcer announce: (GBChildRemoved new child: aChild) ]
 ]
 
 { #category : 'adding' }
@@ -60,6 +66,16 @@ GBNode >> removeElement: anElement [
 	children remove: anElement.
 	anElement deleteFrom: self.
 	announcer announce: (GBChildRemoved new child: anElement)
+]
+
+{ #category : 'adding' }
+GBNode >> translation: aPoint [
+
+	| ref |
+	self addElement: (ref := GBDrawingReference new
+			        position: aPoint;
+			        yourself).
+	^ ref
 ]
 
 { #category : 'adding' }

@@ -13,7 +13,7 @@ GBMouseOverDetection >> addedTo: aNode [
 
 	super addedTo: aNode.
 	aNode announcer
-		when: GBMouseMove
+		when: GBMouseGlobalMove
 		do: [ :ev |
 			(self contains: ev position)
 				ifTrue: [

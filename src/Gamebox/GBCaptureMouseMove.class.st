@@ -9,5 +9,5 @@ Class {
 GBCaptureMouseMove >> onCanvas: canvas [
 	super onCanvas: canvas.
 	canvas onMouseMoveDo: [ :e |
-		parent announcer announce: (GBMouseMove new with: e) ].
+		parent announcer announce: (GBMouseGlobalMove new with: e) ].
 ]

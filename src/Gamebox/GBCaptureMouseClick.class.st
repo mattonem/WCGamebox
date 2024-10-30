@@ -14,5 +14,5 @@ GBCaptureMouseClick >> eventType [
 GBCaptureMouseClick >> onCanvas: canvas [
 	super onCanvas: canvas.
 	canvas onMouseClickDo: [ :e |
-		parent announcer announce: (GBMouseClick new with: e) ].
+		parent announcer announce: (GBMouseGlobalClick new with: e) ].
 ]

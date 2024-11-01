@@ -132,11 +132,11 @@ GameboxApp >> logoFactory [
 		       url: 'https://www.svgrepo.com/show/219787/camping-tent.svg';
 		       yourself.
 	node := GBNode new.
-	ref2 := GBDrawingReference new
+	ref2 := GBDrawingTranslation new
 		        name: 'center';
 		        position: -400 @ -400;
 		        yourself.
-	ref := GBDrawingReference new
+	ref := GBDrawingScale new
 		       name: 'scale';
 		       yourself.
 	ref2 addElement: img.
@@ -160,12 +160,11 @@ GameboxApp >> logoFactory [
 { #category : 'as yet unclassified' }
 GameboxApp >> octopusFactory [
 
-	| ref ref2 |
-	ref := GBDrawingReference new
-		       scale: 0.2 @ 0.2;
-		       position: 0 @ 0.
-	ref2 := ref translation: 600 @ 0.
-	(ref2 translation: -400 @ -400) addElement: (GBImage new
+	| ref ref2 ref3 |
+	ref := GBDrawingRotation new angle: 0.
+	ref2 := ref scaleRef: 0.2 @ 0.2.
+	ref3 := ref2 translation: 600 @ 0.
+	(ref3 translation: -400 @ -400) addElement: (GBImage new
 			 url: 'https://www.svgrepo.com/show/485003/octopus.svg';
 			 yourself).
 	ref addElement: (GBRotationAnimation new speed: -2).
@@ -176,9 +175,7 @@ GameboxApp >> octopusFactory [
 GameboxApp >> octopusNextScene [
 
 	| ref poly |
-	ref := GBDrawingReference new
-		       position: 0 @ 0;
-		       scale: 4 @ 4.
+	ref := GBDrawingScale new scale: 4 @ 4.
 	ref
 		addElement: (poly := GBPolygon new
 				         color: 'blue';
@@ -195,10 +192,10 @@ GameboxApp >> octopusNextScene [
 		addElement: (GBMouseClickPolygon new points: poly points);
 		addElement: (GBScript new
 				 on: GBMouseOverStarted;
-				 do: [ :ev | ref scale: 8@8 ]);
+				 do: [ :ev | ref scale: 8 @ 8 ]);
 		addElement: (GBScript new
 				 on: GBMouseOverEnded;
-				 do: [ :ev | ref scale: 4@4 ]);
+				 do: [ :ev | ref scale: 4 @ 4 ]);
 		addElement: (GBScript new
 				 on: GBMouseElementClicked;
 				 do: [ :ev | self startLogoScene ]).
@@ -208,11 +205,11 @@ GameboxApp >> octopusNextScene [
 { #category : 'as yet unclassified' }
 GameboxApp >> polygonFactory [
 
-	| ref poly animation |
-	ref := GBDrawingReference new
-		       position: 0 @ 0;
-		       scale: 4 @ 4.
-	ref
+	| ref poly animation ref2 |
+	ref := GBDrawingTranslation new position: 0 @ 0.
+
+	ref2 := (ref scaleRef: 4 @ 4) rotation: 0.
+	ref2
 		addElement: (poly := GBPolygon new
 				         color: self randomColor;
 				         points: {
@@ -242,7 +239,7 @@ GameboxApp >> polygonFactory [
 									              @ (-500 to: 500) atRandom;
 								              yourself).
 					 reference triggerElementFirst: newShape ]).
-	(ref translation: -15 @ 0) addElement: (GBText new
+	(ref2 translation: -15 @ 0) addElement: (GBText new
 			 text: 'click me';
 			 font: '10px serif').
 	^ ref
@@ -252,8 +249,7 @@ GameboxApp >> polygonFactory [
 GameboxApp >> polygonNextScene [
 
 	| ref poly |
-	ref := GBDrawingReference new
-		       position: 0 @ 0;
+	ref := GBDrawingScale new
 		       scale: 4 @ 4.
 	ref
 		addElement: (poly := GBPolygon new
@@ -311,7 +307,7 @@ GameboxApp >> sceneFactory [
 	clock := GBClock new.
 	clock requestedTps: 120.
 	node := GBNode new.
-	node addElement: (reference := GBDrawingReference new
+	node addElement: (reference := GBDrawingTranslation new
 			              position: 500 @ 500;
 			              yourself).
 	node addElement: clock.

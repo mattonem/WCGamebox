@@ -38,7 +38,7 @@ GBDebugger >> addedTo: anElement [
 GBDebugger >> debugFactory [
 
 	| node |
-	node := GBDrawingReference new position: 0 @ 48.
+	node := GBDrawingTranslation new position: 0 @ 48.
 	debugText := GBText new.
 	node addElement: debugText.
 	^ node

@@ -69,10 +69,30 @@ GBNode >> removeElement: anElement [
 ]
 
 { #category : 'adding' }
+GBNode >> rotation: anAngle [
+
+	| ref |
+	self addElement: (ref := GBDrawingRotation new
+			        angle: anAngle;
+			        yourself).
+	^ ref
+]
+
+{ #category : 'adding' }
+GBNode >> scaleRef: aPoint [
+
+	| ref |
+	self addElement: (ref := GBDrawingScale new
+			        scale: aPoint;
+			        yourself).
+	^ ref
+]
+
+{ #category : 'adding' }
 GBNode >> translation: aPoint [
 
 	| ref |
-	self addElement: (ref := GBDrawingReference new
+	self addElement: (ref := GBDrawingTranslation new
 			        position: aPoint;
 			        yourself).
 	^ ref

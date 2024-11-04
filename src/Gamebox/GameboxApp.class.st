@@ -312,7 +312,7 @@ GameboxApp >> sceneFactory [
 			              yourself).
 	node addElement: clock.
 	node addElement: orchestrator.
-	node addElement: GBDrawSequencer new.
+	node addElement: GBFullDrawSequencer new.
 	node addElement: (debug := GBDebugger new).
 	node addElement: (GBCaptureMouseClick new
 			 onCanvas: (self componentNamed: #plotter);

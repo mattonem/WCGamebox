@@ -25,8 +25,21 @@ GBADrawSequencer >> draw: aNode evt: evt [
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+GBADrawSequencer >> drawingEvent [
+
+	^ drawingEvent
+]
+
+{ #category : 'accessing' }
+GBADrawSequencer >> drawingEvent: anObject [
+
+	drawingEvent := anObject
+]
+
 { #category : 'as yet unclassified' }
 GBADrawSequencer >> initialize [
 
+	super initialize.
 	drawingEvent := GBDrawingNow new yourself
 ]

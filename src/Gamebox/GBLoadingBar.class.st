@@ -1,6 +1,6 @@
 Class {
 	#name : 'GBLoadingBar',
-	#superclass : 'GBNode',
+	#superclass : 'GBPartialDrawing',
 	#instVars : [
 		'min',
 		'max',

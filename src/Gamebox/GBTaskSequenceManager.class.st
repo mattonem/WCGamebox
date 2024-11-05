@@ -24,8 +24,9 @@ GBTaskSequenceManager >> do [
 { #category : 'accessing' }
 GBTaskSequenceManager >> doNext [
 
-	index > sequence size ifTrue: [ 
+	index > sequence size ifTrue: [
 		index := 1.
+		element dispatchEvent: (Event new: 'tasksFinished').
 		^ self ].
 	(sequence at: index) value.
 	index := index + 1.
@@ -55,6 +56,12 @@ GBTaskSequenceManager >> initialize [
 	element := document createElement: 'null'.
 	element addEventListener: 'progressEvent' block: [ self doNext ].
 	inBetweenDo := [  ]
+]
+
+{ #category : 'accessing' }
+GBTaskSequenceManager >> onFinishDo: aBlock [
+
+	element addEventListener: 'tasksFinished' block: aBlock
 ]
 
 { #category : 'accessing' }

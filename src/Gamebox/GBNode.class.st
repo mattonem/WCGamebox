@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : 'adding' }
+GBNode >> addAllElements: aColl [
+
+	aColl do: [ :e | self addElement: e ]
+]
+
+{ #category : 'adding' }
 GBNode >> addElement: anObject [ 
 	children add: anObject.
 	anObject addedTo: self.

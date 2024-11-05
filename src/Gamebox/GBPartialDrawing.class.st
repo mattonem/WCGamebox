@@ -17,9 +17,14 @@ GBPartialDrawing >> addedTo: aNode [
 
 	super addedTo: aNode.
 	subscription := aNode announcer
-		when: GBDrawingNow
-		do: [ :evt | self drawChildren: evt context evt: evt ]
-		for: self.
+		                when: GBDrawingNow
+		                do: [ :evt |
+		                self drawChildren: evt context evt: evt ]
+		                for: self.
+	subscription := aNode announcer
+		                when: GBDrawingNow - GBDrawingNowPartial
+		                do: [ :evt | self needsUpdate ]
+		                for: self
 ]
 
 { #category : 'adding' }

@@ -337,6 +337,7 @@ GameboxApp >> sceneFactory [
 		                yourself.
 	clock := GBClock new.
 	clock requestedTps: 120.
+	clock waitUntilIsFinished: orchestrator.
 	node := GBNode new.
 	node addElement: (reference := GBDrawingTranslation new
 			              position: 500 @ 500;

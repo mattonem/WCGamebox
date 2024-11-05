@@ -10,7 +10,8 @@ Class {
 		'timeFactor',
 		'timeoutId',
 		'startedAt',
-		'timeNow'
+		'timeNow',
+		'shouldWait'
 	],
 	#pools : [
 		'PjDomGlobals'
@@ -38,7 +39,8 @@ GBClock >> initialize [
 	lastPeriod := 1.
 	self requestedTps: 60.
 	timeFactor := 1.
-	timeNow := self _timeNow 
+	timeNow := self _timeNow .
+	shouldWait := false
 	
 ]
 
@@ -57,6 +59,8 @@ GBClock >> lastUpdate [
 GBClock >> loop [
 
 	| dt loopStartTime nextUpdateDue |
+	shouldWait ifTrue: [ ^ window setTimeout: [ self loop ] and: 10 ].
+	shouldWait := true.
 	loopStartTime := self _timeNow.
 	window clearTimeout: timeoutId.
 	lastPeriod := loopStartTime - lastUpdate.
@@ -122,4 +126,11 @@ GBClock >> timeNow [
 GBClock >> tps [
 
 	^ 1000 / lastPeriod
+]
+
+{ #category : 'as yet unclassified' }
+GBClock >> waitUntilIsFinished: anOrchestrator [
+
+	anOrchestrator manager onFinishDo: [ shouldWait := false ].
+	
 ]

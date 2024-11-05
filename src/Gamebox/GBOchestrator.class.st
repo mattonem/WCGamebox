@@ -42,6 +42,11 @@ GBOchestrator >> listenTo: anObject [
 ]
 
 { #category : 'accessing' }
+GBOchestrator >> manager [
+	^ manager
+]
+
+{ #category : 'accessing' }
 GBOchestrator >> sequence: anObject [
 
 	sequence := anObject

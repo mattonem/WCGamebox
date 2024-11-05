@@ -108,7 +108,7 @@ WCGameBoxCanvas >> start [
 { #category : 'accessing' }
 WCGameBoxCanvas >> update [
 
-	scene announcer announce: (GBDrawingNow new
+	scene announcer announce: (GBFullDrawingNow new
 			 context: self context;
 			 yourself)
 ]

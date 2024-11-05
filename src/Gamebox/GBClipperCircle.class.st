@@ -18,7 +18,7 @@ GBClipperCircle >> addedTo: aNode [
 
 	super addedTo: aNode.
 	aNode announcer
-		when: GBDrawingNow
+		when: GBFullDrawingNow
 		do: [ :evt | self drawChildren: evt context evt: evt ]
 		for: self.
 
@@ -55,7 +55,7 @@ GBClipperCircle >> drawChildren: ctx evt: evt [
 { #category : 'accessing' }
 GBClipperCircle >> forwardEvent [
 
-	^ super forwardEvent - GBDrawingNow  
+	^ super forwardEvent - GBFullDrawingNow  
 ]
 
 { #category : 'comparing' }

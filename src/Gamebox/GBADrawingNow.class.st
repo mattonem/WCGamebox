@@ -1,5 +1,5 @@
 Class {
-	#name : 'GBDrawingNow',
+	#name : 'GBADrawingNow',
 	#superclass : 'GBAnnouncement',
 	#instVars : [
 		'context'
@@ -9,13 +9,13 @@ Class {
 }
 
 { #category : 'accessing' }
-GBDrawingNow >> context [
+GBADrawingNow >> context [
 
 	^ context
 ]
 
 { #category : 'accessing' }
-GBDrawingNow >> context: anObject [
+GBADrawingNow >> context: anObject [
 
 	context := anObject
 ]

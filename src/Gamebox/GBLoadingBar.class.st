@@ -89,5 +89,6 @@ GBLoadingBar >> progressPx [
 
 { #category : 'accessing' }
 GBLoadingBar >> updateProgressBar [
-	progressRect corner: (self progressPx @ 10)
+	progressRect corner: (self progressPx @ 10).
+	self needsUpdate 
 ]

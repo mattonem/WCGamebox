@@ -17,13 +17,15 @@ GBPartialDrawing >> addedTo: aNode [
 
 	super addedTo: aNode.
 	subscription := aNode announcer
-		                when: GBDrawingNow
+		                when: GBDrawingNowPartial
 		                do: [ :evt |
-		                self drawChildren: evt context evt: evt ]
+			                self drawChildren: evt context evt: evt ]
 		                for: self.
 	subscription := aNode announcer
-		                when: GBDrawingNow - GBDrawingNowPartial
-		                do: [ :evt | self needsUpdate ]
+		                when: GBFullDrawingNow
+		                do: [ :evt |
+			                self needsUpdate.
+			                self drawChildren: evt context evt: evt ]
 		                for: self
 ]
 
@@ -38,7 +40,7 @@ GBPartialDrawing >> drawChildren: ctx evt: evt [
 { #category : 'adding' }
 GBPartialDrawing >> forwardEvent [
 
-	^ super forwardEvent - GBDrawingNow  
+	^ super forwardEvent - GBADrawingNow  
 ]
 
 { #category : 'adding' }

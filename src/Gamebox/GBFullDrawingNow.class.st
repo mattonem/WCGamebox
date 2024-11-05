@@ -1,5 +1,5 @@
 Class {
-	#name : 'GBDrawingNowPartial',
+	#name : 'GBFullDrawingNow',
 	#superclass : 'GBADrawingNow',
 	#category : 'Gamebox',
 	#package : 'Gamebox'

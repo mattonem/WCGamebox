@@ -325,7 +325,7 @@ GameboxApp >> randomColor [
 GameboxApp >> sceneFactory [
 
 	| node orchestrator drawEvent bg |
-	drawEvent := GBDrawSequenceStart new
+	drawEvent := GBDrawFullClearSequenceStart new
 		             context: (self componentNamed: #plotter) context;
 		             yourself.
 
@@ -343,7 +343,7 @@ GameboxApp >> sceneFactory [
 			              yourself).
 	node addElement: clock.
 	node addElement: orchestrator.
-	node addElement: GBFullDrawSequencer new.
+	node addElement: GBDrawSequencer new.
 	node addElement: (debug := GBDebugger new).
 	node addElement: (GBCaptureMouseClick new
 			 onCanvas: (self componentNamed: #plotter);

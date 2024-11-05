@@ -55,7 +55,7 @@ GBNode >> deleteAllChildren [
 
 { #category : 'adding' }
 GBNode >> forwardEvent [ 
-	^ GBAnnouncement - GBTick 
+	^ GBAnnouncement - GBTick - GBDrawSequenceStart 
 ]
 
 { #category : 'adding' }

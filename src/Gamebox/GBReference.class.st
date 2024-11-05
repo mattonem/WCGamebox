@@ -10,7 +10,7 @@ GBReference >> addedTo: aNode [
 
 	super addedTo: aNode.
 	aNode announcer
-		when: GBDrawingNow
+		when: GBADrawingNow 
 		do: [ :evt | self drawChildren: evt context evt: evt ]
 		for: self.
 	aNode announcer
@@ -31,7 +31,7 @@ GBReference >> drawChildren: ctx evt: evt [
 { #category : 'accessing' }
 GBReference >> forwardEvent [
 
-	^ super forwardEvent - GBDrawingNow - GBMouseEvent 
+	^ super forwardEvent - GBADrawingNow - GBMouseEvent 
 ]
 
 { #category : 'accessing' }

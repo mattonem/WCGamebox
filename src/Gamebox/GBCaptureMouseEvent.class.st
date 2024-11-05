@@ -3,7 +3,8 @@ Class {
 	#superclass : 'GBElement',
 	#instVars : [
 		'parent',
-		'canvas'
+		'canvas',
+		'event'
 	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
@@ -23,12 +24,24 @@ GBCaptureMouseEvent >> deleteFrom: aNode [
 ]
 
 { #category : 'as yet unclassified' }
-GBCaptureMouseEvent >> eventType [
+GBCaptureMouseEvent >> eventClass [
+	self subclassResponsibility.
+]
 
-	self subclassResponsibility
+{ #category : 'as yet unclassified' }
+GBCaptureMouseEvent >> eventType [
+	self subclassResponsibility.
+]
+
+{ #category : 'as yet unclassified' }
+GBCaptureMouseEvent >> initialize [ 
+	super initialize .
+	event := self eventClass new
 ]
 
 { #category : 'as yet unclassified' }
 GBCaptureMouseEvent >> onCanvas: aCanvas [
-	canvas := aCanvas
+
+	canvas := aCanvas.
+
 ]

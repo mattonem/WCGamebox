@@ -2,7 +2,9 @@ Class {
 	#name : 'GBMouseOverDetection',
 	#superclass : 'GBElement',
 	#instVars : [
-		'currentlyOvering'
+		'currentlyOvering',
+		'eventStarted',
+		'eventEnded'
 	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
@@ -19,13 +21,11 @@ GBMouseOverDetection >> addedTo: aNode [
 				ifTrue: [
 					currentlyOvering ifFalse: [
 						currentlyOvering := true.
-						aNode announcer announce:
-							(GBMouseOverStarted new with: ev position) ] ]
+						aNode announcer announce: (eventStarted with: ev position) ] ]
 				ifFalse: [
 					currentlyOvering ifTrue: [
 						currentlyOvering := false.
-						aNode announcer announce:
-							(GBMouseOverEnded new with: ev position) ] ] ]
+						aNode announcer announce: (eventEnded with: ev position) ] ] ]
 		for: self
 ]
 
@@ -38,5 +38,6 @@ GBMouseOverDetection >> contains: aPoint [
 GBMouseOverDetection >> initialize [
 
 	super initialize.
-
+	eventStarted := GBMouseOverStarted new.
+	eventEnded := GBMouseOverEnded new
 ]

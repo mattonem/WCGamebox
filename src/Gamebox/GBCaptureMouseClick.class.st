@@ -6,13 +6,19 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-GBCaptureMouseClick >> eventType [
-	^ 'mousemove'
+GBCaptureMouseClick >> eventClass [
+	^ GBMouseGlobalClick
 ]
 
 { #category : 'as yet unclassified' }
-GBCaptureMouseClick >> onCanvas: canvas [
-	super onCanvas: canvas.
+GBCaptureMouseClick >> eventType [
+	^ 'click'
+]
+
+{ #category : 'as yet unclassified' }
+GBCaptureMouseClick >> onCanvas: aCanvas [
+	super onCanvas: aCanvas.
 	canvas onMouseClickDo: [ :e |
-		parent announcer announce: (GBMouseGlobalClick new with: e) ].
+		event with: e.
+		parent announcer announce: event ].
 ]

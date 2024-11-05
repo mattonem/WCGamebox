@@ -124,6 +124,37 @@ GameboxApp >> lightBlueBackground [
 ]
 
 { #category : 'as yet unclassified' }
+GameboxApp >> loadbarNextScene [
+
+	| ref poly |
+	ref := GBDrawingScale new scale: 4 @ 4.
+	ref
+		addElement: (poly := GBPolygon new
+				         color: 'blue';
+				         points: {
+						         (-10 @ -5).
+						         (0 @ -5).
+						         (0 @ -10).
+						         (10 @ 0).
+						         (0 @ 10).
+						         (0 @ 5).
+						         (-10 @ 5) };
+				         yourself);
+		addElement: (GBMouseOverPolygon new points: poly points);
+		addElement: (GBMouseClickPolygon new points: poly points);
+		addElement: (GBScript new
+				 on: GBMouseOverStarted;
+				 do: [ :ev | ref scale: 8 @ 8 ]);
+		addElement: (GBScript new
+				 on: GBMouseOverEnded;
+				 do: [ :ev | ref scale: 4 @ 4 ]);
+		addElement: (GBScript new
+				 on: GBMouseElementClicked;
+				 do: [ :ev | self startLogoScene ]).
+	^ ref
+]
+
+{ #category : 'as yet unclassified' }
 GameboxApp >> logoFactory [
 
 	| node ref ref2 img |
@@ -198,7 +229,7 @@ GameboxApp >> octopusNextScene [
 				 do: [ :ev | ref scale: 4 @ 4 ]);
 		addElement: (GBScript new
 				 on: GBMouseElementClicked;
-				 do: [ :ev | self startLogoScene ]).
+				 do: [ :ev | self startLoadBar ]).
 	^ ref
 ]
 
@@ -327,7 +358,7 @@ GameboxApp >> sceneFactory [
 			               textAlign: 'center';
 			               font: '80px Arial';
 			               yourself).
-	self startLogoScene.
+	self startLoadBar.
 	^ node
 ]
 
@@ -370,6 +401,26 @@ GameboxApp >> startClip [
 		do: [ :e | clip center: e position ]
 		for: clip.
 	(reference translation: 300 @ 0) addElement: self octopusNextScene
+]
+
+{ #category : 'as yet unclassified' }
+GameboxApp >> startLoadBar [
+
+	| bar tasks |
+	reference deleteAllChildren.
+	sceneTitle text: 'Loading bar'.
+	reference addElement: (bar := GBLoadingBar new
+			        min: 0;
+			        max: 200;
+			        yourself).
+	tasks := (1 to: 200) collect: [ :e | [ 1 ] ].
+	(reference translation: 300 @ 0) addElement: self loadbarNextScene.
+	GBLoadManager new
+		task: tasks;
+		inBetweenDo: [
+			console log: bar progress.
+			bar progressInc ];
+		do
 ]
 
 { #category : 'as yet unclassified' }

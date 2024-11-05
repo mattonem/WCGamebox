@@ -1,8 +1,8 @@
 Class {
-	#name : 'GBLoadManager',
+	#name : 'GBTaskSequenceManager',
 	#superclass : 'Object',
 	#instVars : [
-		'task',
+		'sequence',
 		'inBetweenDo',
 		'index',
 		'element'
@@ -15,15 +15,19 @@ Class {
 }
 
 { #category : 'accessing' }
-GBLoadManager >> do [ 
+GBTaskSequenceManager >> do [
+
+	index = 1 ifFalse: [ ^ self ].
 	element dispatchEvent: (Event new: 'progressEvent')
 ]
 
 { #category : 'accessing' }
-GBLoadManager >> doNext [
+GBTaskSequenceManager >> doNext [
 
-	index >= task size ifTrue: [ ^ false ].
-	(task at: index) value.
+	index > sequence size ifTrue: [ 
+		index := 1.
+		^ self ].
+	(sequence at: index) value.
 	index := index + 1.
 	inBetweenDo value.
 	window
@@ -32,34 +36,35 @@ GBLoadManager >> doNext [
 ]
 
 { #category : 'accessing' }
-GBLoadManager >> inBetweenDo [
+GBTaskSequenceManager >> inBetweenDo [
 
 	^ inBetweenDo
 ]
 
 { #category : 'accessing' }
-GBLoadManager >> inBetweenDo: anObject [
+GBTaskSequenceManager >> inBetweenDo: anObject [
 
 	inBetweenDo := anObject
 ]
 
 { #category : 'accessing' }
-GBLoadManager >> initialize [
+GBTaskSequenceManager >> initialize [
 
 	super initialize.
 	index := 1.
 	element := document createElement: 'null'.
-	element addEventListener: 'progressEvent' block: [ self doNext ]
+	element addEventListener: 'progressEvent' block: [ self doNext ].
+	inBetweenDo := [  ]
 ]
 
 { #category : 'accessing' }
-GBLoadManager >> task [
+GBTaskSequenceManager >> sequence [
 
-	^ task
+	^ sequence
 ]
 
 { #category : 'accessing' }
-GBLoadManager >> task: anObject [
+GBTaskSequenceManager >> sequence: anObject [
 
-	task := anObject
+	sequence := anObject
 ]

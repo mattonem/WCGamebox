@@ -415,11 +415,9 @@ GameboxApp >> startLoadBar [
 			        yourself).
 	tasks := (1 to: 200) collect: [ :e | [ 1 ] ].
 	(reference translation: 300 @ 0) addElement: self loadbarNextScene.
-	GBLoadManager new
-		task: tasks;
-		inBetweenDo: [
-			console log: bar progress.
-			bar progressInc ];
+	GBTaskSequenceManager new
+		sequence: tasks;
+		inBetweenDo: [ bar progressInc ];
 		do
 ]
 

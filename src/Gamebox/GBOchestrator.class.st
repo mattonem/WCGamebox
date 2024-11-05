@@ -3,7 +3,11 @@ Class {
 	#superclass : 'GBElement',
 	#instVars : [
 		'listenTo',
-		'sequence'
+		'sequence',
+		'manager'
+	],
+	#pools : [
+		'PjDomGlobals'
 	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
@@ -12,19 +16,23 @@ Class {
 { #category : 'as yet unclassified' }
 GBOchestrator >> addedTo: aNode [
 
-	aNode announcer 
+	aNode announcer
 		when: listenTo
-		do: [:evt|
-			sequence do: [ :anEvent |
-				anEvent withTick: evt.
-				aNode announcer announce: anEvent ] ]
+		do: [ :evt |
+			manager
+				sequence: (sequence collect: [ :anEvent |
+							 [
+							 anEvent withTick: evt.
+							 aNode announcer announce: anEvent ] ]);
+				do ]
 		for: self
 ]
 
 { #category : 'as yet unclassified' }
 GBOchestrator >> initialize [
 	listenTo := GBTick.
-	sequence := [  ]
+	sequence := [  ].
+	manager := GBTaskSequenceManager new.
 ]
 
 { #category : 'accessing' }

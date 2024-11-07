@@ -80,8 +80,8 @@ GBClock >> requestedTps: anInteger [
 
 { #category : 'as yet unclassified' }
 GBClock >> start [
-
 	started ifTrue: [ ^ self ].
+	shouldWait := false.
 	started := true.
 	lastUpdate := self _timeNow.
 	startedAt := lastUpdate.

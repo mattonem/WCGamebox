@@ -75,3 +75,11 @@ GBTaskSequenceManager >> sequence: anObject [
 
 	sequence := anObject
 ]
+
+{ #category : 'accessing' }
+GBTaskSequenceManager >> syncDo [
+
+	index = 1 ifFalse: [ ^ self ].
+	sequence do: [ :e | e value ].
+	element dispatchEvent: (Event new: 'tasksFinished').
+]

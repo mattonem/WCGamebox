@@ -24,7 +24,7 @@ GBOchestrator >> addedTo: aNode [
 							 [
 							 anEvent withTick: evt.
 							 aNode announcer announce: anEvent ] ]);
-				do ]
+				syncDo ]
 		for: self
 ]
 

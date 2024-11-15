@@ -29,6 +29,18 @@ GBOrederedSubscriptionRegistry >> bringLast: subscriber [
 ]
 
 { #category : 'initialization' }
+GBOrederedSubscriptionRegistry >> deliver: anAnnouncement to: subs [
+
+	^ subs do: [ :subscription | subscription deliver: anAnnouncement ]
+]
+
+{ #category : 'private' }
+GBOrederedSubscriptionRegistry >> deliver: anAnnouncement to: subs startingAt: startIndex [
+
+	self shouldNotImplement
+]
+
+{ #category : 'initialization' }
 GBOrederedSubscriptionRegistry >> reset [
 	"subscriber -> subscriptions"
 

@@ -84,7 +84,8 @@ WCGameBoxCanvas >> renderHtmlOn: html [
 		width: 1000;
 		height: 1000;
 		class: 'mx-auto';
-		style: 'width: 400px; height:400px; user-select: none;'
+		style: 'width: 400px; height:400px; user-select: none;';
+		attributeAt: 'tabindex' put: '1'
 ]
 
 { #category : 'accessing' }

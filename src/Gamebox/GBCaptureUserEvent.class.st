@@ -1,5 +1,5 @@
 Class {
-	#name : 'GBCaptureMouseEvent',
+	#name : 'GBCaptureUserEvent',
 	#superclass : 'GBElement',
 	#instVars : [
 		'parent',
@@ -11,36 +11,37 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-GBCaptureMouseEvent >> addedTo: aNode [
+GBCaptureUserEvent >> addedTo: aNode [
 
 	super addedTo: aNode.
 	parent := aNode.
 ]
 
 { #category : 'as yet unclassified' }
-GBCaptureMouseEvent >> deleteFrom: aNode [
+GBCaptureUserEvent >> deleteFrom: aNode [
 	super deleteFrom: aNode .
+	parent := nil.
 	canvas removeEventListener: self eventType 
 ]
 
 { #category : 'as yet unclassified' }
-GBCaptureMouseEvent >> eventClass [
+GBCaptureUserEvent >> eventClass [
+	'onkeydown'
+]
+
+{ #category : 'as yet unclassified' }
+GBCaptureUserEvent >> eventType [
 	self subclassResponsibility.
 ]
 
 { #category : 'as yet unclassified' }
-GBCaptureMouseEvent >> eventType [
-	self subclassResponsibility.
-]
-
-{ #category : 'as yet unclassified' }
-GBCaptureMouseEvent >> initialize [ 
+GBCaptureUserEvent >> initialize [ 
 	super initialize .
 	event := self eventClass new
 ]
 
 { #category : 'as yet unclassified' }
-GBCaptureMouseEvent >> onCanvas: aCanvas [
+GBCaptureUserEvent >> onCanvas: aCanvas [
 
 	canvas := aCanvas.
 

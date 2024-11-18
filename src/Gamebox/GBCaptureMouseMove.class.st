@@ -1,6 +1,6 @@
 Class {
 	#name : 'GBCaptureMouseMove',
-	#superclass : 'GBCaptureMouseEvent',
+	#superclass : 'GBCaptureUserEvent',
 	#category : 'Gamebox',
 	#package : 'Gamebox'
 }

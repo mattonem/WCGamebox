@@ -90,6 +90,11 @@ GBClock >> start [
 ]
 
 { #category : 'as yet unclassified' }
+GBClock >> started [
+	^ started
+]
+
+{ #category : 'as yet unclassified' }
 GBClock >> startedAt [
 	^ startedAt
 ]

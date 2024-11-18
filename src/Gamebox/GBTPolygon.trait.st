@@ -78,5 +78,5 @@ GBTPolygon >> points [
 { #category : 'accessing' }
 GBTPolygon >> points: anObject [
 
-	points := anObject
+	points := anObject copyWith: anObject first
 ]

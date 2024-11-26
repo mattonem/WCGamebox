@@ -1,6 +1,6 @@
 Class {
 	#name : 'GBCalculate',
-	#superclass : 'GBAnnouncement',
+	#superclass : 'GBAnnouncementDown',
 	#instVars : [
 		'duration',
 		'clock'

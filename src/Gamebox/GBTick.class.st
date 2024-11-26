@@ -1,6 +1,6 @@
 Class {
 	#name : 'GBTick',
-	#superclass : 'GBAnnouncement',
+	#superclass : 'GBAnnouncementDown',
 	#instVars : [
 		'duration',
 		'clock'

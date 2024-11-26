@@ -1,6 +1,6 @@
 Class {
 	#name : 'GBKeyDown',
-	#superclass : 'GBAnnouncement',
+	#superclass : 'GBAnnouncementDown',
 	#instVars : [
 		'evt'
 	],

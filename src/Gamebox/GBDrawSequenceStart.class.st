@@ -1,6 +1,6 @@
 Class {
 	#name : 'GBDrawSequenceStart',
-	#superclass : 'GBAnnouncement',
+	#superclass : 'GBAnnouncementDown',
 	#instVars : [
 		'context'
 	],

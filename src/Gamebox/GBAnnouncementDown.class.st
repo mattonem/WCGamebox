@@ -1,10 +1,10 @@
 Class {
-	#name : 'GBAnnouncement',
+	#name : 'GBAnnouncementDown',
 	#superclass : 'Announcement',
 	#category : 'Gamebox',
 	#package : 'Gamebox'
 }
 
 { #category : 'as yet unclassified' }
-GBAnnouncement >> withTick: aTickAnnoucmenet [
+GBAnnouncementDown >> withTick: aTickAnnoucmenet [
 ]

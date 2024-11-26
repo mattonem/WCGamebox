@@ -1,6 +1,6 @@
 Class {
 	#name : 'GBUpdate',
-	#superclass : 'GBAnnouncement',
+	#superclass : 'GBAnnouncementDown',
 	#category : 'Gamebox',
 	#package : 'Gamebox'
 }

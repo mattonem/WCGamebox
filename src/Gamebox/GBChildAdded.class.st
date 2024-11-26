@@ -1,6 +1,6 @@
 Class {
 	#name : 'GBChildAdded',
-	#superclass : 'GBAnnouncement',
+	#superclass : 'GBAnnouncementUp',
 	#instVars : [
 		'child'
 	],

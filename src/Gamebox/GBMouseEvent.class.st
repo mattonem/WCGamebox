@@ -1,6 +1,6 @@
 Class {
 	#name : 'GBMouseEvent',
-	#superclass : 'GBAnnouncement',
+	#superclass : 'GBAnnouncementDown',
 	#instVars : [
 		'position'
 	],

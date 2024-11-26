@@ -29,7 +29,10 @@ GBNode >> addedTo: aNode [
 		when: self forwardEvent
 		do: [ :ev | announcer announce: ev ]
 		for: self.
-	
+	announcer
+		when: GBAnnouncementUp
+		do: [ :e | aNode announcer announce: e ]
+		for: self
 ]
 
 { #category : 'initialization' }
@@ -56,8 +59,7 @@ GBNode >> deleteAllChildren [
 { #category : 'adding' }
 GBNode >> forwardEvent [
 
-	^ GBAnnouncement - GBTick - GBDrawSequenceStart - GBChildRemoved
-	  - GBChildAdded
+	^ GBAnnouncementDown - GBTick - GBDrawSequenceStart
 ]
 
 { #category : 'adding' }

@@ -30,6 +30,12 @@ GBDrawingScale >> movePoint: oldPos [
 	^ oldPos x / scale x @ (oldPos y / scale y)
 ]
 
+{ #category : 'accessing' }
+GBDrawingScale >> movePointUp: oldPos [
+
+	^ oldPos x * scale x @ (oldPos y * scale y)
+]
+
 { #category : 'as yet unclassified' }
 GBDrawingScale >> scale [
 

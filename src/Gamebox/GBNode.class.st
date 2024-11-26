@@ -30,7 +30,7 @@ GBNode >> addedTo: aNode [
 		do: [ :ev | announcer announce: ev ]
 		for: self.
 	announcer
-		when: GBAnnouncementUp
+		when: self upwardEvent
 		do: [ :e | aNode announcer announce: e ]
 		for: self
 ]
@@ -54,6 +54,13 @@ GBNode >> deleteAllChildren [
 	oldChildren do: [ :aChild |
 		aChild deleteFrom: self.
 		announcer announce: (GBChildRemoved new child: aChild) ]
+]
+
+{ #category : 'initialization' }
+GBNode >> deleteFrom: aNode [
+
+	super deleteFrom: aNode.
+	announcer unsubscribe: self
 ]
 
 { #category : 'adding' }
@@ -118,4 +125,10 @@ GBNode >> triggerElementFirst: anElement [
 GBNode >> triggerElementLast: anElement [
 	"If anElement contains/is UI elements, this will make it appear in front of all other UI elements in the node."
 	announcer bringLast: anElement
+]
+
+{ #category : 'adding' }
+GBNode >> upwardEvent [
+
+	^ GBAnnouncementUp
 ]

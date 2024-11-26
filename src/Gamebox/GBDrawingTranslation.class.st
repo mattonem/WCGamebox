@@ -30,6 +30,12 @@ GBDrawingTranslation >> movePoint: oldPos [
 	^  oldPos - position.
 ]
 
+{ #category : 'accessing' }
+GBDrawingTranslation >> movePointUp: oldPos [
+
+	^  oldPos + position.
+]
+
 { #category : 'as yet unclassified' }
 GBDrawingTranslation >> position [
 

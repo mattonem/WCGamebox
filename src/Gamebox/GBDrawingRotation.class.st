@@ -52,3 +52,9 @@ GBDrawingRotation >> movePoint: oldPos [
 
 	^ oldPos rotateBy: angle about: 0 @ 0
 ]
+
+{ #category : 'accessing' }
+GBDrawingRotation >> movePointUp: oldPos [
+
+	^ oldPos rotateBy: -1 *  angle about: 0 @ 0
+]

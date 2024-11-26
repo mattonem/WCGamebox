@@ -58,9 +58,7 @@ GBTPolygon >> edges [
 			                  (points at: index + 1) }.
 		          index := index + 1.
 		          edge ]) asOrderedCollection.
-	edges add: {
-			points last.
-			points first }.
+	
 	^ edges
 ]
 

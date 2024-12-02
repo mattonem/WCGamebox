@@ -19,7 +19,7 @@ GBPolygonTest >> testContains [
 			        (1 @ 0) }.
 	self assert: (poly contains: 3 @ 3) equals: false.
 	self assert: (poly contains: 0.5 @ 0.5) equals: true.
-	self assert: (poly contains: 0 @ 0) equals: true.
+	self assert: (poly contains: 0 @ 0) equals: false.
 
 ]
 

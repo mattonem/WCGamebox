@@ -11,7 +11,8 @@ Trait {
 
 { #category : 'accessing' }
 GBTPolygon >> contains: aPoint [
-"http://www.philliplemons.com/posts/ray-casting-algorithm"
+	"http://www.philliplemons.com/posts/ray-casting-algorithm"
+
 	| huge eps inside point |
 	point := aPoint copy.
 	huge := Float infinity.
@@ -28,10 +29,10 @@ GBTPolygon >> contains: aPoint [
 				a := anEdge at: 1 ].
 
 		(point y = a y or: [ point y = b y ]) ifTrue: [
-			point := point + (0 @ point y + eps) ].
+			point := point x @ (point y + eps) ].
 		(point y > b y or: [ point y < a y or: [ point x > (a x max: b x) ] ])
 			ifFalse: [
-				point x < (a x max: b x)
+				point x < (a x min: b x)
 					ifTrue: [ inside := inside not ]
 					ifFalse: [
 						[ mEdge := b y - a y / (b x - a x) ]

@@ -1,6 +1,9 @@
 Class {
 	#name : 'GBReference',
 	#superclass : 'GBNode',
+	#pools : [
+		'PjDomGlobals'
+	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
 }
@@ -23,14 +26,11 @@ GBReference >> addedTo: aNode [
 			self moveAllPointsUpOf: e.
 			aNode announcer announce: e ]
 		for: self.
-	aNode announcer
-		when: GBCollisionLookdown
+	announcer
+		when: GBTransformationLookup
 		do: [ :e |
-			| oldPoints |
-			oldPoints := e points copy.
-			self moveAllPointsDownOf: e.
-			announcer announce: e.
-			e points: oldPoints ]
+			e transformation: (self transformationDownFor: e transformation).
+			aNode announcer announce: e ]
 		for: self
 ]
 
@@ -46,7 +46,7 @@ GBReference >> drawChildren: ctx evt: evt [
 { #category : 'accessing' }
 GBReference >> forwardEvent [
 
-	^ super forwardEvent - GBADrawingNow - GBMouseEvent - GBCollisionLookdown
+	^ super forwardEvent - GBADrawingNow - GBMouseEvent - GBHandleCollision
 ]
 
 { #category : 'accessing' }
@@ -90,7 +90,13 @@ GBReference >> movePointUp: oldPos [
 ]
 
 { #category : 'accessing' }
+GBReference >> transformationDownFor: aBlock [
+
+	^ [ :aPoint | aBlock value: (self movePoint: aPoint) ]
+]
+
+{ #category : 'accessing' }
 GBReference >> upwardEvent [
 
-	^ GBAnnouncementUp - GBCollisionLookup
+	^ GBAnnouncementUp - GBCollisionLookup - GBTransformationLookup 
 ]

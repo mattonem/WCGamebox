@@ -1,6 +1,6 @@
 Class {
-	#name : 'GBCollisionLookdown',
-	#superclass : 'GBAnnouncementDown',
+	#name : 'GBHandleCollision',
+	#superclass : 'Announcement',
 	#instVars : [
 		'points',
 		'caller'
@@ -10,25 +10,25 @@ Class {
 }
 
 { #category : 'accessing' }
-GBCollisionLookdown >> caller [
+GBHandleCollision >> caller [
 
 	^ caller
 ]
 
 { #category : 'accessing' }
-GBCollisionLookdown >> caller: anObject [
+GBHandleCollision >> caller: anObject [
 
 	caller := anObject
 ]
 
 { #category : 'accessing' }
-GBCollisionLookdown >> points [
+GBHandleCollision >> points [
 
 	^ points
 ]
 
 { #category : 'accessing' }
-GBCollisionLookdown >> points: anObject [
+GBHandleCollision >> points: anObject [
 
 	points := anObject
 ]

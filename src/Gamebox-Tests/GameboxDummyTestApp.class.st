@@ -71,21 +71,25 @@ GameboxDummyTestApp class >> updateHtmlRoot: root [
 GameboxDummyTestApp >> prepBoard [
 
 	| shareRef poly |
-	(shareRef := (root translation: 500 @ 500) rotation: 0) addElement:
+	(shareRef := (root translation: 500 @ 500) rotation: 1) addElement:
 		(poly := GBPolygon new
 			         points: self shape;
 			         color: nil;
 			         strokeStyle: 'black';
 			         lineWidth: 5;
 			         yourself).
+	shareRef addElement: (GBRotationAnimation new speed: -0.5).
 	shareRef addElement: (GBCollisionReference new
 			 identifier: #shape;
 			 shape: poly).
-	(1 to: 20) do: [ :i |
-		(1 to: 20) do: [ :j |
+	(1 to: 10) do: [ :i |
+		(1 to: 10) do: [ :j |
 			| circle circleRef |
 			(circleRef := root translation: i * 15 @ (j * 15) + (350 @ 350))
 				addElement: (circle := GBCircle new radius: 4).
+			circleRef addElement: (GBScript new
+					 on: GBUpdate;
+					 do: [ circle color: 'red' ]).
 			circleRef addElement: (GBCollision new
 					 points: { (0 @ 0) };
 					 lookfor: #shape;
@@ -109,22 +113,32 @@ GameboxDummyTestApp >> randomColor [
 { #category : 'as yet unclassified' }
 GameboxDummyTestApp >> sceneFactory [
 
-	|  drawEvent  |
-	drawEvent := GBDrawNoClearSequenceStart new
+	| drawEvent orchestrator clock |
+	drawEvent := GBDrawFullClearSequenceStart new
 		             context: (self componentNamed: #plotter) context;
 		             yourself.
+	orchestrator := GBOchestrator new
+		                sequence: {
+				                GBCalculate new.
+				                GBUpdate new.
+				                GBCollisionDetection new.
+				                drawEvent };
+		                yourself.
 
-	
-	
-	
+
+
 
 	root := GBCollisionScope new.
+	clock := GBClock new.
+	clock requestedTps: 120.
+	clock waitUntilIsFinished: orchestrator.
+	root addElement: clock.
+	root addElement: orchestrator.
 	root addElement: (reference := GBDrawingTranslation new
 			              position: 500 @ 500;
 			              yourself).
 
-	root addElement:
-		(GBDrawSequencer new drawingEvent: GBDrawingNowPartial new yourself).
+	root addElement: GBDrawSequencer new.
 	root addElement: (GBCaptureMouseClick new
 			 onCanvas: (self componentNamed: #plotter);
 			 yourself).
@@ -140,8 +154,9 @@ GameboxDummyTestApp >> sceneFactory [
 			 on: GBMouseGlobalMove;
 			 do: [ root announcer announce: drawEvent ];
 			 yourself).
-	root announcer announce: GBCollisionDetection new.
-	root announcer announce: drawEvent.
+
+	root addElement: GBDebugger new.
+	clock start.
 	^ root
 ]
 

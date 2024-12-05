@@ -14,7 +14,12 @@ GBElement >> addedTo: anElement [
 
 { #category : 'as yet unclassified' }
 GBElement >> deleteFrom: aNode [ 
+
 	aNode announcer unsubscribe: self
+]
+
+{ #category : 'as yet unclassified' }
+GBElement >> ifNode: aBlock [
 ]
 
 { #category : 'as yet unclassified' }

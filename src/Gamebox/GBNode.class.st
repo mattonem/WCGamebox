@@ -3,7 +3,8 @@ Class {
 	#superclass : 'GBElement',
 	#instVars : [
 		'children',
-		'announcer'
+		'announcer',
+		'transformations'
 	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
@@ -32,7 +33,9 @@ GBNode >> addedTo: aNode [
 	announcer
 		when: self upwardEvent
 		do: [ :e | aNode announcer announce: e ]
-		for: self
+		for: self.
+	transformations do: [ :aTransformation |
+		aNode announcer announce: aTransformation ]
 ]
 
 { #category : 'initialization' }
@@ -52,14 +55,15 @@ GBNode >> deleteAllChildren [
 	oldChildren := children.
 	children := OrderedCollection new.
 	oldChildren do: [ :aChild |
-		aChild deleteFrom: self.
-		announcer announce: (GBChildRemoved new child: aChild) ]
+		announcer announce: (GBChildRemoved new child: aChild).
+		aChild deleteFrom: self ]
 ]
 
 { #category : 'initialization' }
 GBNode >> deleteFrom: aNode [
 
 	super deleteFrom: aNode.
+	announcer announce: (GBWillBeRemoved new).
 	announcer unsubscribe: self
 ]
 
@@ -70,19 +74,31 @@ GBNode >> forwardEvent [
 ]
 
 { #category : 'adding' }
+GBNode >> ifNode: aBlock [
+
+	aBlock cull: self
+]
+
+{ #category : 'adding' }
 GBNode >> initialize [
 
 	super initialize.
 	children := OrderedCollection new.
 	announcer := GBOrederedAnnouncer new.
-
+	transformations := OrderedCollection new.
+	announcer
+		when: GBTransformationLookup
+		do: [ :evt | transformations add: evt ]
+		for: self
 ]
 
 { #category : 'initialization' }
 GBNode >> removeElement: anElement [
-	children remove: anElement.
+	
 	anElement deleteFrom: self.
-	announcer announce: (GBChildRemoved new child: anElement)
+	children remove: anElement.
+
+
 ]
 
 { #category : 'adding' }

@@ -47,3 +47,8 @@ GBDrawingScale >> scale: anObject [
 
 	scale := anObject
 ]
+
+{ #category : 'accessing' }
+GBDrawingScale >> transformationDownFor: aBlock [
+	^ [ self movePoint: aBlock value ]
+]

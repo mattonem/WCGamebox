@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+GBCalculate >> clock [
+
+	^ clock
+]
+
+{ #category : 'as yet unclassified' }
 GBCalculate >> duration [ 
 ^ duration
 ]

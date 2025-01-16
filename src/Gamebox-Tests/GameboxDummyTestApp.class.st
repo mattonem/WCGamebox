@@ -82,8 +82,8 @@ GameboxDummyTestApp >> prepBoard [
 	shareRef addElement: (GBCollisionReference new
 			 identifier: #shape;
 			 shape: poly).
-	(1 to: 10) do: [ :i |
-		(1 to: 10) do: [ :j |
+	(1 to: 20) do: [ :i |
+		(1 to: 20) do: [ :j |
 			| circle circleRef |
 			(circleRef := root translation: i * 15 @ (j * 15) + (350 @ 350))
 				addElement: (circle := GBCircle new radius: 4).
@@ -121,12 +121,9 @@ GameboxDummyTestApp >> sceneFactory [
 		                sequence: {
 				                GBCalculate new.
 				                GBUpdate new.
-				                GBCollisionDetection new.
+			                   GBCollisionDetection new.
 				                drawEvent };
 		                yourself.
-
-
-
 
 	root := GBCollisionScope new.
 	clock := GBClock new.

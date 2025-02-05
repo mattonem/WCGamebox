@@ -57,18 +57,25 @@ GameboxApp class >> generateHtmlUsing: html [
 						class: 'card-body';
 						with: [
 							html div with: [
-									self addComponent: (WCGameBoxCanvas on: html) named: #plotter ].
+									self
+										addComponent: (WCGameBoxCanvas new
+												 width: 1000;
+												 height: 1000;
+												 widthStyle: '400px';
+												 heightStyle: '400px';
+												 on: html)
+										named: #plotter ].
 							html div with: [
-									html label
-										for: 'tps';
-										class: 'form-label';
-										with: 'TPS: '.
-									html inputRange
-										min: 1;
-										max: 240;
-										value: 120;
-										class: 'form-range';
-										id: 'tps' ].
+								html label
+									for: 'tps';
+									class: 'form-label';
+									with: 'TPS: '.
+								html inputRange
+									min: 1;
+									max: 240;
+									value: 120;
+									class: 'form-range';
+									id: 'tps' ].
 							html div with: [
 								html label
 									for: 'timeFactor';

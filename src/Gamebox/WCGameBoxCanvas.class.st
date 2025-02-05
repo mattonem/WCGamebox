@@ -2,7 +2,11 @@ Class {
 	#name : 'WCGameBoxCanvas',
 	#superclass : 'WCComponent',
 	#instVars : [
-		'scene'
+		'scene',
+		'width',
+		'height',
+		'widthStyle',
+		'heightStyle'
 	],
 	#category : 'Gamebox',
 	#package : 'Gamebox'
@@ -43,7 +47,24 @@ WCGameBoxCanvas >> getBoundingClientRect [
 
 { #category : 'rendering' }
 WCGameBoxCanvas >> height [
-	^ (self getElementById: #plot) getAttribute: #height 
+	^ height ifNil: [ height := 400 ]
+]
+
+{ #category : 'rendering' }
+WCGameBoxCanvas >> height: someSize [
+	height := someSize 
+]
+
+{ #category : 'rendering' }
+WCGameBoxCanvas >> heightStyle [
+
+	^ heightStyle ifNil: [ height asString , 'px' ]
+]
+
+{ #category : 'accessing' }
+WCGameBoxCanvas >> heightStyle: anObject [
+
+	heightStyle := anObject
 ]
 
 { #category : 'rendering' }
@@ -78,13 +99,13 @@ WCGameBoxCanvas >> onMouseMoveDo: aBlock [
 
 { #category : 'rendering' }
 WCGameBoxCanvas >> renderHtmlOn: html [
-
 	html canvas
 		id: 'plot';
-		width: 1000;
-		height: 1000;
+		width: self width;
+		height: self height;
 		class: 'mx-auto';
-		style: 'width: 400px; height:400px; user-select: none;';
+		style: 'width:' , self widthStyle , '; height:' , self heightStyle
+			, '; user-select: none;';
 		attributeAt: 'tabindex' put: '1'
 ]
 
@@ -116,5 +137,22 @@ WCGameBoxCanvas >> update [
 
 { #category : 'rendering' }
 WCGameBoxCanvas >> width [
-	^ (self getElementById: #plot) getAttribute: #width 
+	^ width ifNil: [ width := 400 ]
+]
+
+{ #category : 'rendering' }
+WCGameBoxCanvas >> width: someSize [
+	width := someSize 
+]
+
+{ #category : 'rendering' }
+WCGameBoxCanvas >> widthStyle [
+
+	^ widthStyle ifNil: [ width asString , 'px' ]
+]
+
+{ #category : 'accessing' }
+WCGameBoxCanvas >> widthStyle: anObject [
+
+	widthStyle := anObject
 ]
